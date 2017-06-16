@@ -72,9 +72,13 @@ for (let i=0; i<allTypeDefinitionFiles.length; i++) {
   const currentFile = allTypeDefinitionFiles[i];
   const currentFilePath = path.dirname(currentFile);
   const targetFilePath = currentFilePath.replace(/^_es2015\/src[/]?/, '../dist/');
-  shell.echo(currentFilePath);
   if (!shell.test('-d', targetFilePath)) {
     shell.mkdir('-p', targetFilePath);
   };
   shell.cp(currentFile, targetFilePath);
 }
+
+//
+//
+//
+shell.echo('ALL DONE');

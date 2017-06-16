@@ -6,7 +6,7 @@ Common code to build the cloukit Angular libraries based on [angular-quickstart-
 
 &nbsp;
 
-### Module Format
+### Module Format - FESM
 
 Each library comes as an tree-shakeable and AOT enabled flat ES2015 Module.
 See [YouTube Packaging Angular - Jason Aden - ng-conf 2017]()https://www.youtube.com/watch?v=unICbsPGFIA) for in depth explanation.
@@ -80,7 +80,7 @@ npm --registry https://registry.npmjs.org/ --access public publish
 
 (1) Create `manifest.json`
 (2) Add `library-build-chain`, `build`, `dist` to `.gitignore`
-(3) Main file with exports is expected to be `../src/index.ts`
+(3) Main file with exports is expected to be `../src/index.ts` see example: https://github.com/cloukit/common
 
 -----
 
