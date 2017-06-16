@@ -66,7 +66,7 @@ shell.cp(`../README.md`, `../dist/`);
 //
 // FIXME: SINCE WE CANNOT CREATE A TS-BUNDLE FILES WE NEED TO COPY ALL *.d.ts FILES MANUALLY TO DIST
 //
-const allTypeDefinitionFiles = find('_es2015/src/').filter(file => file.match(/\.d.ts$/));
+const allTypeDefinitionFiles = shell.find('_es2015/src/').filter(file => file.match(/\.d.ts$/));
 for (let i=0; i<allTypeDefinitionFiles.length; i++) {
   shell.cp(allTypeDefinitionFiles[i], '../dist/');
 }
