@@ -56,7 +56,7 @@ fs.writeFileSync(`../dist/package.json`, JSON.stringify(packageJson, null, 2));
 //
 // COPY METADATA FILE FOR TREE SHAKING
 //
-shell.cp(`_es2015/${manifest.moduleId}.manifest.json`, `../dist/${manifest.moduleId}.manifest.json`);
+shell.cp(`_es2015/${manifest.moduleId}.metadata.json`, `../dist/${manifest.moduleId}.metadata.json`);
 
 //
 // FIXME: SINCE WE CANNOT CREATE A TS-BUNDLE FILES WE NEED TO COPY ALL *.d.ts FILES MANUALLY TO DIST
