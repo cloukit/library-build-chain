@@ -17,7 +17,7 @@ exports.generate = (moduleId, version, dependencyType, dependencies) => {
       url: `https://github.com/cloukit/${moduleId}.git`
     },
     module: `${moduleId}.es5.js`,
-    es2015: `${moduleId}.js`,
+    es2015: `${moduleId}.es2015.js`,
     typings: `${moduleId}.d.ts`,
     author: 'codeclou.io',
   };

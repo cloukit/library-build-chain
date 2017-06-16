@@ -49,6 +49,15 @@ fs.writeFileSync(`${currentDir}/package.json`, JSON.stringify(packageJson, null,
 shell.exec(`${NGC_BINARY} -p tsconfig-es5.json`);
 shell.exec(`${NGC_BINARY} -p tsconfig-es2015.json`);
 
+shell.exec(`${ROLLUP_BINARY} _es5/${manifest.moduleId}.js -o ../dist/${manifest.moduleId}.es5.js`);
+shell.exec(`${ROLLUP_BINARY} _es2015/${manifest.moduleId}.js -o ../dist/${manifest.moduleId}.es2015.js`);
+
+
+//
+// CLEANUP _es5 AND _es2015 dir
+//
+//find('.').filter(function(file) { return file.match(/\.ts$/); });
+
 /*
 # Run Angular Compiler
 $NGC -p src/tsconfig-build.json
@@ -57,7 +66,6 @@ $ROLLUP build/simple-ui-lib.js -o dist/simple-ui-lib.js
 
 # Repeat the process for es5 version
 $NGC -p src/tsconfig-es5.json
-$ROLLUP build/simple-ui-lib.js -o dist/simple-ui-lib.es5.js
 
 # Copy non-js files from build
 rsync -a --exclude=*.js build/ dist
