@@ -12,7 +12,7 @@ exports.generate = (target, moduleId) => ({
     stripInternal: true,
     experimentalDecorators: true,
     moduleResolution: 'node',
-    outDir: '../build/_tsbuild',
+    outDir: `../build/_${target}`,
     rootDir: '.',
     lib: ['es2015', 'dom'],
     skipLibCheck: true,
