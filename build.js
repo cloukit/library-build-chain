@@ -48,7 +48,7 @@ fs.writeFileSync(`${currentDir}/package.json`, JSON.stringify(packageJson, null,
 
 shell.exec(`${NGC_BINARY} -p tsconfig-es5.json`);
 
-
+/*
 # Run Angular Compiler
 $NGC -p src/tsconfig-build.json
 # Rollup simple-ui-lib.js
@@ -64,3 +64,4 @@ rsync -a --exclude=*.js build/ dist
 # Copy library package.json and README.md
 cp src/package.json dist/package.json
 cp README.md dist/README.md
+*/
