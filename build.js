@@ -70,7 +70,11 @@ shell.cp(`../README.md`, `../dist/`);
 const allTypeDefinitionFiles = shell.find('_es2015/src/').filter(file => file.match(/\.d.ts$/));
 for (let i=0; i<allTypeDefinitionFiles.length; i++) {
   const currentFile = allTypeDefinitionFiles[i];
-  var currentFilePath = path.dirname(currentFile);
+  const currentFilePath = path.dirname(currentFile);
+  const targetFilePath = currentFilePath.replace(/^_es2015\/src[/]?/, '../dist/');
   shell.echo(currentFilePath);
-  //shell.cp(, '../dist/');
+  if (!shell.test('-d', targetFilePath)) {
+    shell.mkdir('-p', targetFilePath);
+  };
+  shell.cp(currentFile, targetFilePath);
 }
