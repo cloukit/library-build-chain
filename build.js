@@ -7,6 +7,7 @@
  */
 const shell = require('shelljs');
 const fs = require('fs');
+const path = require('path');
 const NGC_BINARY='../library-build-chain/node_modules/.bin/ngc';
 const ROLLUP_BINARY='../library-build-chain/node_modules/.bin/rollup';
 const tsconfigTemplate = require('./build-tsconfig-template.js');
@@ -68,5 +69,8 @@ shell.cp(`../README.md`, `../dist/`);
 //
 const allTypeDefinitionFiles = shell.find('_es2015/src/').filter(file => file.match(/\.d.ts$/));
 for (let i=0; i<allTypeDefinitionFiles.length; i++) {
-  shell.cp(allTypeDefinitionFiles[i], '../dist/');
+  const currentFile = allTypeDefinitionFiles[i];
+  var currentFilePath = path.dirname(currentFile);
+  shell.echo(currentFilePath);
+  //shell.cp(, '../dist/');
 }
