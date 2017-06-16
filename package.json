@@ -4,6 +4,9 @@
   "description": "Common code to build cloukit Angular Modules",
   "author": "Bernhard Grünewaldt",
   "license": "MIT",
+  "scripts": {
+    "build": "node ./build.js"
+  },
   "devDependencies": {
     "@angular/core": "^4.0.1",
     "@angular/compiler": "^4.0.1",
@@ -11,6 +14,7 @@
     "rollup": "^0.41.6",
     "rxjs": "^5.3.0",
     "typescript": "^2.2.2",
-    "zone.js": "^0.8.5"
+    "zone.js": "^0.8.5",
+    "shelljs": "^0.7.8"
   }
 }

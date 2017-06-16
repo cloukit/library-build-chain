@@ -1,4 +1,4 @@
-# ng-library-build
+# library-build-chain
 
 Common code to build the cloukit Angular libraries based on [angular-quickstart-lib](https://github.com/filipesilva/angular-quickstart-lib) and [simple-ui-lib](https://github.com/jasonaden/simple-ui-lib)
 
@@ -59,19 +59,28 @@ which will then be transformed into:
 Goto the library dir containing `metadata.json` and execute:
 
 ```bash
-git clone https://github.com/cloukit/ng-library-build.git build
-cd build/
+git clone https://github.com/cloukit/ng-library-build.git library-build-chain
+cd library-build-chain
 npm install
 npm run build
 ```
 
-Now there will be a `dist/` directory containing everything that can now be published to npmjs.com
+Now there will be a `../dist/` directory containing everything that can now be published to npmjs.com
 
 ```bash
-cd dist/
+cd ../dist/
 npm --registry https://registry.npmjs.org/ login
 npm --registry https://registry.npmjs.org/ --access public publish
 ```
+-----
+
+&nbsp;
+
+### Setup for a Library
+
+(1) Create `manifest.json`
+(2) Add `library-build-chain`, `build`, `dist` to `.gitignore`
+(3) Main file with exports is expected to be `../src/index.ts`
 
 -----
 
