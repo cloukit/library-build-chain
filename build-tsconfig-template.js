@@ -13,13 +13,13 @@ exports.generate = (target, moduleId) => ({
     experimentalDecorators: true,
     moduleResolution: 'node',
     outDir: `../build/_${target}`,
-    rootDir: '.',
+    rootDir: './src/',
     lib: ['es2015', 'dom'],
     skipLibCheck: true,
     types: []
   },
   files: [
-    './src/index.ts'
+    './index.ts'
   ],
   angularCompilerOptions: {
     annotateForClosureCompiler: true,
