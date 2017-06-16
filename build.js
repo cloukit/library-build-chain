@@ -56,31 +56,17 @@ fs.writeFileSync(`../dist/package.json`, JSON.stringify(packageJson, null, 2));
 //
 // COPY METADATA FILE FOR TREE SHAKING
 //
-shell.cp(`_es2015/${manifest.moduleId}.metadata.json`, `../dist/${manifest.moduleId}.metadata.json`);
+shell.cp(`_es2015/src/${manifest.moduleId}.metadata.json`, `../dist/${manifest.moduleId}.metadata.json`);
+
+//
+// COPY README
+//
+shell.cp(`../README.md`, `../dist/`);
 
 //
 // FIXME: SINCE WE CANNOT CREATE A TS-BUNDLE FILES WE NEED TO COPY ALL *.d.ts FILES MANUALLY TO DIST
 //
-
-
-//
-// CLEANUP _es5 AND _es2015 dir
-//
-//find('.').filter(function(file) { return file.match(/\.ts$/); });
-
-/*
-# Run Angular Compiler
-$NGC -p src/tsconfig-build.json
-# Rollup simple-ui-lib.js
-$ROLLUP build/simple-ui-lib.js -o dist/simple-ui-lib.js
-
-# Repeat the process for es5 version
-$NGC -p src/tsconfig-es5.json
-
-# Copy non-js files from build
-rsync -a --exclude=*.js build/ dist
-
-# Copy library package.json and README.md
-cp src/package.json dist/package.json
-cp README.md dist/README.md
-*/
+const allTypeDefinitionFiles = find('_es2015/src/').filter(file => file.match(/\.d.ts$/));
+for (let i=0; i<allTypeDefinitionFiles.length; i++) {
+  shell.cp(allTypeDefinitionFiles[i], '../dist/');
+}
