@@ -1,6 +1,6 @@
 {
   "name": "@cloukit/ng-library-build",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Common code to build cloukit Angular Modules",
   "author": "Bernhard Grünewaldt",
   "license": "MIT",
