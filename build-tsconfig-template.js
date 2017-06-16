@@ -19,7 +19,7 @@ exports.generate = (target, moduleId) => ({
     types: []
   },
   files: [
-    './index.ts'
+    './src/index.ts'
   ],
   angularCompilerOptions: {
     annotateForClosureCompiler: true,
