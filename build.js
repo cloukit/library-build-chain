@@ -47,6 +47,7 @@ fs.writeFileSync(`${currentDir}/package.json`, JSON.stringify(packageJson, null,
 
 
 shell.exec(`${NGC_BINARY} -p tsconfig-es5.json`);
+shell.exec(`${NGC_BINARY} -p tsconfig-es2015.json`);
 
 /*
 # Run Angular Compiler

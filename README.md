@@ -21,7 +21,7 @@ The library itself has `metadata.json` containing:
 
 ```json
 {
-  "moduleId": "@cloukit/multi-select",
+  "moduleId": "multi-select",
   "version": "1.1.0",
   "peerDependencies": {
     "@angular/core": "^4.0.1",
