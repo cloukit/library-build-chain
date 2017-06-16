@@ -10,7 +10,7 @@ const fs = require('fs');
 const NGC_BINARY='../library-build-chain/node_modules/.bin/ngc';
 const ROLLUP_BINARY='../library-build-chain/node_modules/.bin/rollup';
 const tsconfigTemplate = require('./build-tsconfig-template.js');
-const packageJsonTemplate = require('./build-tsconfig-template.js');
+const packageJsonTemplate = require('./build-package-json-template.js');
 
 //
 // CLEANUP COPY SRC CONTENTS TO BUILD
