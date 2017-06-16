@@ -42,15 +42,25 @@ fs.writeFileSync(`${currentDir}/tsconfig-es2015.json`, JSON.stringify(tsConfigES
 let packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, 'dependencies', manifest.peerDependencies);
 fs.writeFileSync(`${currentDir}/package.json`, JSON.stringify(packageJson, null, 2));
 shell.exec('npm install');
-packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, 'peerDependencies', manifest.peerDependencies);
-fs.writeFileSync(`${currentDir}/package.json`, JSON.stringify(packageJson, null, 2));
-
-
 shell.exec(`${NGC_BINARY} -p tsconfig-es5.json`);
 shell.exec(`${NGC_BINARY} -p tsconfig-es2015.json`);
-
 shell.exec(`${ROLLUP_BINARY} _es5/src/${manifest.moduleId}.js -o ../dist/${manifest.moduleId}.es5.js`);
 shell.exec(`${ROLLUP_BINARY} _es2015/src/${manifest.moduleId}.js -o ../dist/${manifest.moduleId}.es2015.js`);
+
+//
+// WRITE FINAL LIB package.json
+//
+packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, 'peerDependencies', manifest.peerDependencies);
+fs.writeFileSync(`../dist/package.json`, JSON.stringify(packageJson, null, 2));
+
+//
+// COPY METADATA FILE FOR TREE SHAKING
+//
+shell.cp(`_es2015/${manifest.moduleId}.manifest.json`, `../dist/${manifest.moduleId}.manifest.json`);
+
+//
+// FIXME: SINCE WE CANNOT CREATE A TS-BUNDLE FILES WE NEED TO COPY ALL *.d.ts FILES MANUALLY TO DIST
+//
 
 
 //
