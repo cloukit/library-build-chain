@@ -12,9 +12,11 @@ chmod 777 ../build-results
 #
 # ONLY BUILD MASTER BRANCH AND TAGS
 #
+echo "GWBT_TAG: $GWBT_TAG"
+echo "GWBT_BRANCH: $GWBT_BRANCH"
 if [[ "${GWBT_BRANCH}" != "master" ]]
 then
-  if [ -z "$GWBT_TAG" ]
+  if [[ -z "$GWBT_TAG" ]]
   then
     echo "TAG DETECTED. CONTINUE"
   else
