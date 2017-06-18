@@ -43,6 +43,9 @@ docker run \
     -e GWBT_REPO_HTML_URL=$GWBT_REPO_HTML_URL \
     -e GWBT_REPO_FULL_NAME=$GWBT_REPO_FULL_NAME \
     -e GWBT_REPO_NAME=$GWBT_REPO_NAME \
+    -e NPMJS_PASSWORD=$NPMJS_PASSWORD \
+    -e NPMJS_USERNAME=$NPMJS_USERNAME \
+    -e NPMJS_EMAIL=$NPMJS_EMAIL \
     --volume $WORKSPACE:/work \
     codeclou/docker-nodejs:7.5.0.1 \
     bash /work/library-build-chain/jenkins-inside-docker.sh

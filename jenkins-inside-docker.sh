@@ -97,8 +97,11 @@ upload_asset_to_github_release \
 # PUBLISH dist/* TO NPMJS.COM
 #
 
-# see: http://blog.npmjs.org/post/118393368555/deploying-with-npm-private-modules
-echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+# values created by 'npm adduser'
+echo "//registry.npmjs.org/:_password=${NPMJS_PASSWORD}" > ~/.npmrc
+echo "//registry.npmjs.org/:username=${NPMJS_USERNAME}" >> ~/.npmrc
+echo "//registry.npmjs.org/:email=${NPMJS_EMAIL}" >> ~/.npmrc
+echo "//registry.npmjs.org/:always-auth=false" >> ~/.npmrc
 
 cd /work-private/dist
 npm --registry https://registry.npmjs.org/ --access public publish
