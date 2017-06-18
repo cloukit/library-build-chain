@@ -89,7 +89,7 @@ upload_asset_to_github_release \
     $release_name \
     $release_id \
     /work/build-results/ \
-    zip.zip  \
+    dist.zip  \
     "application/octet-stream"
 
 
