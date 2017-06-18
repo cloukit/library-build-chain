@@ -18,11 +18,12 @@ if [[ "${GWBT_BRANCH}" != "master" ]]
 then
   if [[ -z "$GWBT_TAG" ]]
   then
-    echo "TAG DETECTED. CONTINUE"
-  else
-  	echo "BRANCH DETECTED. NOT MASTER! EXIT!"
+    echo "BRANCH DETECTED. NOT MASTER! EXIT!"
     exit 0
+  else
+  	echo "TAG DETECTED. CONTINUE"
   fi
+else
   echo "BRANCH DETECTED. IS MASTER! CONTINUE!"
 fi
 
