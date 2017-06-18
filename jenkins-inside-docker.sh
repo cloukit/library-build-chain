@@ -40,11 +40,10 @@ cd /work-private/
 #
 if [ -z "$GWBT_TAG" ]
 then
-  echo "TAG DETECTED. CONTINUE PUBLISH!"
-  exit 0
-else
   echo "NO TAG DETECTED. NO PUBLISH! EXIT!"
   exit 0
+else
+  echo "TAG DETECTED. CONTINUE PUBLISH!"
 fi
 
 
