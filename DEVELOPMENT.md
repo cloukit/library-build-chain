@@ -16,6 +16,9 @@ git clone https://github.com/cloukit/ng-library-build.git library-build-chain
 cd library-build-chain
 npm install
 npm run build
+cd ../
+# symlink node_modules
+ln -s build/node_modules
 ```
 
 (2) Now `dist/` folder appeared:
