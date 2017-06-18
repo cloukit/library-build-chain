@@ -61,7 +61,7 @@ which will then be transformed into:
 Goto the library dir containing `metadata.json` and execute:
 
 ```bash
-git clone https://github.com/cloukit/ng-library-build.git library-build-chain
+git clone https://github.com/cloukit/library-build-chain.git library-build-chain
 cd library-build-chain
 npm install
 npm run build
@@ -80,9 +80,9 @@ npm --registry https://registry.npmjs.org/ --access public publish
 
 ### Setup for a Library
 
-(1) Create `manifest.json`
-(2) Add `library-build-chain`, `build`, `dist` to `.gitignore`
-(3) Main file with exports is expected to be `../src/index.ts` see example: https://github.com/cloukit/common
+  * (1) Create `manifest.json`
+  * (2) Add `library-build-chain`, `build`, `dist` to `.gitignore`
+  * (3) Main file with exports is expected to be `../src/index.ts` see example: https://github.com/cloukit/common
 
 -----
 
