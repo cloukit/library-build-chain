@@ -44,5 +44,5 @@ docker run \
     -e GWBT_REPO_FULL_NAME=$GWBT_REPO_FULL_NAME \
     -e GWBT_REPO_NAME=$GWBT_REPO_NAME \
     --volume $WORKSPACE:/work \
-    codeclou/docker-nodejs:7.5.0 \
+    codeclou/docker-nodejs:7.5.0.1 \
     bash /work/library-build-chain/jenkins-inside-docker.sh
