@@ -69,11 +69,15 @@ npm run build
 
 Now there will be a `../dist/` directory containing everything that can now be published to npmjs.com
 
+:bangbang: Publishing is done by `jenkins.sh` via Jenkins on TAG-Job run.
+
+Therefore tag you library like so
+
 ```bash
-cd ../dist/
-npm --registry https://registry.npmjs.org/ login
-npm --registry https://registry.npmjs.org/ --access public publish
+git tag -a 1.0.2 -m "1.0.2"
+git push origin 1.0.2
 ```
+
 -----
 
 &nbsp;
