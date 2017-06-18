@@ -34,11 +34,19 @@ set -e
 cp -r /work/* /work-private/
 cp -r /work/.gitignore /work-private/
 rm -f /work-private/package-lock.json || true
-cd /work-private
+cd /work-private/library-build-chain/
+
+#
+# BUILD
+#
 npm install
 npm run build
 #sed -i "s/___COMMIT___/$GWBT_COMMIT_AFTER/" ./src/app/app.component.ts
 #sed -i "s/___BUILDSTAMP___/${BUILD_ID}/" ./src/app/app.component.ts
+
+#
+# PRE-PUBLISH
+#
 cd /work-private/dist
 ls -lah
 # Create zip without .git but with e.g. .htaccess
