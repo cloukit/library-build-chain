@@ -7,11 +7,9 @@ See: https://github.com/cloukit/library-build-chain
 
 &nbsp;
 
-# Release
+# Howto Link Lib during Development
 
-**Howto Publish to npmjs.org**
-
-(0) Have it build and no pending commits
+(1) Go to component project and type to build the component
 
 ```
 git clone https://github.com/cloukit/ng-library-build.git library-build-chain
@@ -20,26 +18,24 @@ npm install
 npm run build
 ```
 
-(1) use this because of npm proxy:
+(2) Now `dist/` folder appeared:
 
 ```
 cd dist/
-npm --registry https://registry.npmjs.org/ login
-npm --registry https://registry.npmjs.org/ --access public publish
+npm link
 ```
 
-(2) Create Git Tag
+(3) Link into project 
+
+see: https://docs.npmjs.com/cli/link
 
 ```
-cd ../
-git tag -a 0.0.15 -m "rel 0.0.15"
-git push origin 0.0.15
+cd my-test-project
+npm link @cloukit/foo  # with foo = component name
 ```
 
-(3) Go to github releases and create release from tag.
+(4) Now you should be able to do in your testproject
 
-(4) Increase version in package.json.
-
-```
-git add . -A && git commit -m "version bump" && git push
+```typescript
+import { FooModule } from '@cloukit/foo';
 ```
