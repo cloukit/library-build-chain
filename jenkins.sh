@@ -26,41 +26,6 @@ then
 fi
 
 #
-# BUILD SCRIPT - RUNS INSIDE DOCKER
-#
-cat <<EOF > jenkins--inside-docker.sh
-#!/bin/bash
-set -e
-cp -r /work/* /work-private/
-cp -r /work/.gitignore /work-private/
-rm -f /work-private/package-lock.json || true
-cd /work-private/library-build-chain/
-
-#
-# BUILD
-#
-npm install
-npm run build
-#sed -i "s/___COMMIT___/$GWBT_COMMIT_AFTER/" ./src/app/app.component.ts
-#sed -i "s/___BUILDSTAMP___/${BUILD_ID}/" ./src/app/app.component.ts
-
-#
-# PRE-PUBLISH
-#
-cd /work-private/dist
-ls -lah
-# Create zip without .git but with e.g. .htaccess
-if [ -d ".git" ]; then rm -rf .git; fi
-zip -r dist.zip *
-mv dist.zip /work/build-results/
-chmod 777 /work/build-results/dist.zip
-ls -lah
-cd /work-private/
-
-
-EOF
-
-#
 # RUN DOCKERIZED BUILD
 #
 docker run \
