@@ -82,7 +82,12 @@ npm --registry https://registry.npmjs.org/ --access public publish
 
   * (1) Create `manifest.json`
   * (2) Add `library-build-chain`, `build`, `dist` to `.gitignore`
-  * (3) Main file with exports is expected to be `../src/index.ts` see example: https://github.com/cloukit/common
+  * (3) Main file with exports is expected to be `../src/index.ts` 
+    * see example: https://github.com/cloukit/common
+  * (4) place `jenkins.sh` at root
+    * see example: https://github.com/cloukit/common/blob/master/jenkins.sh
+  * (5) add Webhook to codeclou.io jenkins
+  * (6) Create Jenkins Job for project
 
 -----
 
