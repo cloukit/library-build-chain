@@ -6,8 +6,8 @@
 
 set -e
 
-mkdir build-results
-chmod 777 build-results
+mkdir ../build-results
+chmod 777 ../build-results
 
 #
 # ONLY BUILD MASTER BRANCH AND TAGS
