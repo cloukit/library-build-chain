@@ -47,14 +47,59 @@ else
   exit 0
 fi
 
+
+# =============================================================
 #
 # PUBLISH dist.zip TO GITHUB.COM RELEASE
 #
+# =============================================================
 
-# TODO
+#
+# INSTALL publish-github-release-assets-helper.sh
+#
+curl -so ./publish-github-release-assets-helper.sh \
+"https://raw.githubusercontent.com/codeclou/publish-github-release-assets-helper/\
+1.0.0/publish-github-release-assets-helper.sh"
+echo "9c02010abdb08080f0dbce4088f9d44abf5de54b9d3\
+f11c0caec63d17016d98d9f6b65bb33d64d9d057c37aec6e6\
+3d1fac37eedd565ab5dae603b2695276be6d  publish-github-release-assets-helper.sh" \
+> ./publish-github-release-assets-helper.sh.sha512sum
+sha512sum -c publish-github-release-assets-helper.sh.sha512sum
+source ./publish-github-release-assets-helper.sh
+
+#
+# CREATE GITHUB RELEASE AND ADD dist.zip
+#
+package_version=$GWBT_TAG
+release_id=-1
+release_name=$GWBT_TAG
+repository_owner="cloukit"
+repository_name=$GWBT_REPO_NAME
+branch_to_create_tag_from="master"
+
+create_github_release_and_get_release_id \
+    $repository_owner \
+    $repository_name \
+    $release_name \
+    $branch_to_create_tag_from \
+    release_id
+
+upload_asset_to_github_release \
+    $repository_owner \
+    $repository_name \
+    $release_name \
+    $release_id \
+    /work/build-results/ \
+    zip.zip  \
+    "application/octet-stream"
+
 
 #
 # PUBLISH dist/* TO NPMJS.COM
 #
 
-# TODO
+# see: http://blog.npmjs.org/post/118393368555/deploying-with-npm-private-modules
+echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
+cd /work-private/dist
+npm --registry https://registry.npmjs.org/ --access public publish
