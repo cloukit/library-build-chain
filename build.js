@@ -16,11 +16,6 @@ const tsconfigTemplate = require('./build-tsconfig-template.js');
 const packageJsonTemplate = require('./build-package-json-template.js');
 
 
-//
-// READ MANIFEST
-//
-const manifest = JSON.parse(shell.cat('manifest.json'));
-
 /**
  * Build the package to dist
  * @param languageTarget {string} either 'es5' or 'es2015'
@@ -36,13 +31,20 @@ const buildPackage = (languageTarget, watch) => {
   shell.mkdir('../dist/');
   shell.cp('-R', '../src', '../build/');
   shell.cp('-R', '../manifest.json', '../build/');
-  shell.cd('../build');
+  const currentDir = shell.pwd;
+  if (!currentDir.endsWith('/build')) {
+    shell.cd('../build');
+  }
+
+  //
+  // READ MANIFEST
+  //
+  const manifest = JSON.parse(shell.cat('manifest.json'));
 
   //
   // WRITE TSCONFIGS
   //
   const tsConfig = tsconfigTemplate.generate(languageTarget, manifest.moduleId);
-  const currentDir = shell.pwd();
   fs.writeFileSync(`${currentDir}/tsconfig-${languageTarget}.json`, JSON.stringify(tsConfig, null, 2));
   //
   // GENERATE TEMPORARY LIBRARY package.json TO INSTALL PEER DEPENDENCIES DURING BUILD
@@ -99,6 +101,10 @@ const buildPackage = (languageTarget, watch) => {
   }
 }
 
+
+//
+// INIT
+//
 if (argv.watch) {
   shell.echo('=> WATCH');
   var gaze = new Gaze('../src/**/*');
