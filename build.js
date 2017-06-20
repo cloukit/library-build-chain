@@ -32,7 +32,7 @@ const buildPackage = (languageTarget, watch) => {
   shell.cp('-R', '../src', '../build/');
   shell.cp('-R', '../manifest.json', '../build/');
   const currentDir = shell.pwd;
-  if (!currentDir.endsWith('/build')) {
+  if (!/\/build$/.test(currentDir)) {
     shell.cd('../build');
   }
 
