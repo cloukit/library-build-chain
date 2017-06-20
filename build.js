@@ -31,7 +31,7 @@ const buildPackage = (languageTarget, watch) => {
   shell.mkdir('../dist/');
   shell.cp('-R', '../src', '../build/');
   shell.cp('-R', '../manifest.json', '../build/');
-  const currentDir = shell.pwd;
+  const currentDir = shell.pwd();
   if (!/\/build$/.test(currentDir)) {
     shell.cd('../build');
   }
