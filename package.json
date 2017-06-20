@@ -12,10 +12,11 @@
     "@angular/compiler": "^4.0.1",
     "@angular/compiler-cli": "^4.0.1",
     "@angular/core": "^4.0.1",
+    "fs-extra": "^3.0.1",
     "gaze": "^1.1.2",
     "rollup": "^0.41.6",
     "rxjs": "^5.3.0",
-    "shelljs": "^0.7.8",
+    "shelljs": "0.7.7",
     "typescript": "^2.2.2",
     "yargs": "^8.0.2",
     "zone.js": "^0.8.5"

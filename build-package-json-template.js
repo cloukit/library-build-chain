@@ -3,10 +3,11 @@
  * Copyright (c) 2017 Bernhard Grünewaldt - codeclou.io
  * https://github.com/cloukit/legal
  */
-exports.generate = (moduleId, version, dependencyType, dependencies) => {
+exports.generate = (moduleId, version, description, dependencyType, dependencies) => {
   const packageJson = {
     name: `@cloukit/${moduleId}`,
     version: version,
+    description: description,
     private: false,
     config: {
       access: 'public'
