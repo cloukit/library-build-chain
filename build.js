@@ -121,13 +121,16 @@ const buildPackage = (languageTarget, watch) => {
 //
 // INIT
 //
-if (shell.test('-d', relativePath('../dist'))) shell.rm('-rf', relativePath('../dist/'));
-shell.mkdir(relativePath('../dist/'));
+const initialCleanup = () => {
+  if (shell.test('-d', relativePath('../dist'))) shell.rm('-rf', relativePath('../dist/'));
+  shell.mkdir(relativePath('../dist/'));
+};
 
 if (argv.watch) {
   var gaze = new Gaze('../src/**/*');
   gaze.on('all', (event, filepath) => {
     try {
+      //initialCleanup();
       buildPackage('es5', true);
       buildPackage('es2015', true);
       shell.echo('>> ==============');
@@ -138,6 +141,7 @@ if (argv.watch) {
     }
   });
 } else {
+  initialCleanup();
   buildPackage('es5', false);
   buildPackage('es2015', false);
   shell.echo('>> ==============');
