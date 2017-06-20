@@ -15,15 +15,6 @@ const ROLLUP_BINARY='../library-build-chain/node_modules/.bin/rollup';
 const tsconfigTemplate = require('./build-tsconfig-template.js');
 const packageJsonTemplate = require('./build-package-json-template.js');
 
-//
-// CLEANUP COPY SRC CONTENTS TO BUILD
-//
-shell.rm('-rf', '../build/');
-shell.rm('-rf', '../dist/');
-shell.mkdir('../build/');
-shell.cp('-R', '../src', '../build/');
-shell.cp('-R', '../manifest.json', '../build/');
-shell.cd('../build');
 
 //
 // READ MANIFEST
@@ -36,6 +27,17 @@ const manifest = JSON.parse(shell.cat('manifest.json'));
  * @param watch {boolean}
  */
 const buildPackage = (languageTarget, watch) => {
+  //
+  // CLEANUP COPY SRC CONTENTS TO BUILD
+  //
+  shell.rm('-rf', '../build/');
+  shell.rm('-rf', '../dist/');
+  shell.mkdir('../build/');
+  shell.mkdir('../dist/');
+  shell.cp('-R', '../src', '../build/');
+  shell.cp('-R', '../manifest.json', '../build/');
+  shell.cd('../build');
+
   //
   // WRITE TSCONFIGS
   //
