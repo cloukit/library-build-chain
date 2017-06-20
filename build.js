@@ -28,7 +28,7 @@ shell.cd('../build');
 //
 // READ MANIFEST
 //
-const manifest = require('manifest.json');
+const manifest = JSON.parse(shell.cat('manifest.json'));
 
 /**
  * Build the package to dist
