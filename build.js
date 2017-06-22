@@ -48,7 +48,7 @@ const buildPackage = (languageTarget, watch) => {
   if (!watch && languageTarget === 'es5') {
     let packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, manifest.description, 'dependencies', manifest.peerDependencies);
     fs.writeFileSync(relativePath(`../build/package.json`), JSON.stringify(packageJson, null, 2));
-    shell.echo(chalk.blue('>> ==============')));
+    shell.echo(chalk.blue('>> =============='));
     shell.echo(chalk.blue('>> NPM INSTALL'));
     shell.echo(chalk.blue('>> =============='));
     shell.exec('npm install');
