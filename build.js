@@ -6,6 +6,7 @@
  * https://github.com/cloukit/legal
  */
 const shell = require('shelljs');
+const chalk = require('chalk');
 const fs = require('fs');
 const fse = require('fs-extra');
 const path = require('path');
@@ -47,18 +48,18 @@ const buildPackage = (languageTarget, watch) => {
   if (!watch && languageTarget === 'es5') {
     let packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, manifest.description, 'dependencies', manifest.peerDependencies);
     fs.writeFileSync(relativePath(`../build/package.json`), JSON.stringify(packageJson, null, 2));
-    shell.echo('>> ==============');
-    shell.echo('>> NPM INSTALL');
-    shell.echo('>> ==============');
+    shell.echo(chalk.blue('>> ==============')));
+    shell.echo(chalk.blue('>> NPM INSTALL'));
+    shell.echo(chalk.blue('>> =============='));
     shell.exec('npm install');
   }
 
   //
   // BUILD OR WATCH
   //
-  shell.echo('>> ==============');
-  shell.echo(`>> ${watch ? 'WATCH' : 'BUILD'} : ${languageTarget}`);
-  shell.echo('>> ==============');
+  shell.echo(chalk.blue('>> =============='));
+  shell.echo(chalk.blue(`>> ${watch ? 'WATCH' : 'BUILD'} : ${languageTarget}`));
+  shell.echo(chalk.blue('>> =============='));
 
 
   //
@@ -72,7 +73,7 @@ const buildPackage = (languageTarget, watch) => {
   //
   const buildResult = shell.exec(`${NGC_BINARY} -p tsconfig-${languageTarget}.json`);
   if (buildResult.code !== 0) {
-      shell.echo("NGC ERROR. STOP!")
+      shell.echo(chalk.red("NGC ERROR. STOP!"));
       return;
   }
 
@@ -81,7 +82,7 @@ const buildPackage = (languageTarget, watch) => {
   //
   const rollupResult = shell.exec(`${ROLLUP_BINARY} _${languageTarget}/src/${manifest.moduleId}.js -o ../dist/${manifest.moduleId}.${languageTarget}.js`);
   if (rollupResult.code !== 0) {
-      shell.echo("ROLLUP ERROR. STOP!")
+      shell.echo(chalk.red("ROLLUP ERROR. STOP!"));
       return;
   }
   // ====================
@@ -108,9 +109,9 @@ const buildPackage = (languageTarget, watch) => {
   //
   // FIXME: SINCE WE CANNOT CREATE A TYPE-DEFINITION-BUNDLE FILE (YET) WE NEED TO COPY ALL *.d.ts FILES MANUALLY TO DIST
   //
-  shell.echo('>> ==============');
-  shell.echo(`>> D.TS FILES`);
-  shell.echo('>> ==============');
+  shell.echo(chalk.blue('>> =============='));
+  shell.echo(chalk.blue(`>> D.TS FILES`));
+  shell.echo(chalk.blue('>> =============='));
   fse.copySync(relativePath('../build/_es2015/src'), relativePath('../dist'), {
     filter: file => /^.*[.]ts$/.test(file) || shell.test('-d', file) // *.d.ts files and folders!
   });
@@ -133,9 +134,9 @@ if (argv.watch) {
       //initialCleanup();
       buildPackage('es5', true);
       buildPackage('es2015', true);
-      shell.echo('>> ==============');
-      shell.echo('>> DONE');
-      shell.echo('>> ==============');
+      shell.echo(chalk.green('>> =============='));
+      shell.echo(chalk.green('>> DONE'));
+      shell.echo(chalk.green('>> =============='));
     } catch(err) {
       console.log(err);
     }
@@ -144,7 +145,7 @@ if (argv.watch) {
   initialCleanup();
   buildPackage('es5', false);
   buildPackage('es2015', false);
-  shell.echo('>> ==============');
-  shell.echo('>> DONE');
-  shell.echo('>> ==============');
+  shell.echo(chalk.green('>> =============='));
+  shell.echo(chalk.green('>> DONE'));
+  shell.echo(chalk.green('>> =============='));
 }
