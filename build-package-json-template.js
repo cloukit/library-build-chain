@@ -3,7 +3,7 @@
  * Copyright (c) 2017 Bernhard Grünewaldt - codeclou.io
  * https://github.com/cloukit/legal
  */
-exports.generate = (moduleId, version, description, dependencyType, dependencies, dependencyType2, dependencies2) => {
+exports.generate = (moduleId, version, description, dependencyType, dependencies, dependencyType2, dependencies2, dependencyType3, dependencies3) => {
   const packageJson = {
     name: `@cloukit/${moduleId}`,
     version: version,
@@ -24,5 +24,6 @@ exports.generate = (moduleId, version, description, dependencyType, dependencies
   };
   packageJson[dependencyType] = dependencies;
   packageJson[dependencyType2] = dependencies2;
+  packageJson[dependencyType3] = dependencies3;
   return packageJson;
 };

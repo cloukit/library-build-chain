@@ -46,7 +46,7 @@ const buildPackage = (languageTarget, watch) => {
   // GENERATE TEMPORARY LIBRARY package.json TO INSTALL PEER DEPENDENCIES DURING BUILD
   //
   if (!watch && languageTarget === 'es5') {
-    let packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, manifest.description, 'devDependencies', manifest.peerDependencies, 'dependencies', manifest.dependencies);
+    let packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, manifest.description, 'devDependencies', Object.assign({}, manifest.peerDependencies, manifest.devDependencies), 'dependencies', manifest.dependencies, 'peerDependencies', {});
     fs.writeFileSync(relativePath(`../build/package.json`), JSON.stringify(packageJson, null, 2));
     shell.echo(chalk.blue('>> =============='));
     shell.echo(chalk.blue('>> NPM INSTALL'));
@@ -93,7 +93,7 @@ const buildPackage = (languageTarget, watch) => {
   //
   // WRITE FINAL LIB package.json
   //
-  packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, manifest.description, 'peerDependencies', manifest.peerDependencies, 'dependencies', manifest.dependencies);
+  packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, manifest.description, 'peerDependencies', manifest.peerDependencies, 'dependencies', manifest.dependencies, 'devDependencies', manifest.devDependencies);
   fs.writeFileSync(relativePath('../dist/package.json'), JSON.stringify(packageJson, null, 2));
 
   //
