@@ -130,9 +130,9 @@ const buildPackage = (languageTarget, watch) => {
       shell.echo(chalk.red("NGD ERROR. STOP!"));
       return;
   }
-  shell.cp('../documentation/dependencies.json', '../dist/');
-  shell.cp('../documentation/dependencies.svg', '../dist/');
-  shell.rm('-R', '../documentation');
+  shell.cp('./documentation/dependencies.json', './dist/');
+  shell.cp('./documentation/dependencies.svg', './dist/');
+  shell.rm('-R', './documentation');
 }
 
 
