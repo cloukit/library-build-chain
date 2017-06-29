@@ -130,9 +130,6 @@ const buildPackage = (languageTarget, watch) => {
       shell.echo(chalk.red("NGD ERROR. STOP!"));
       return;
   }
-  shell.cp('./documentation/dependencies.json', './dist/');
-  shell.cp('./documentation/dependencies.svg', './dist/');
-  shell.rm('-R', './documentation');
 }
 
 
@@ -140,6 +137,7 @@ const buildPackage = (languageTarget, watch) => {
 // INIT
 //
 const initialCleanup = () => {
+  if (shell.test('-d', relativePath('../documentation'))) shell.rm('-rf', relativePath('../documentation/'));
   if (shell.test('-d', relativePath('../dist'))) shell.rm('-rf', relativePath('../dist/'));
   shell.mkdir(relativePath('../dist/'));
 };

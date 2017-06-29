@@ -34,6 +34,8 @@ if [ -d ".git" ]; then rm -rf .git; fi
 zip -r dist.zip *
 mv dist.zip /work/build-results/
 chmod 777 /work/build-results/dist.zip
+mv documentation /work/build-results/
+chmod -r 777 /work/build-results/
 ls -lah
 cd /work-private/
 
@@ -94,6 +96,23 @@ upload_asset_to_github_release \
     dist.zip  \
     "application/octet-stream"
 
+upload_asset_to_github_release \
+    $repository_owner \
+    $repository_name \
+    $release_name \
+    $release_id \
+    /work/build-results/documentation/ \
+    dependencies.json  \
+    "application/json"
+
+upload_asset_to_github_release \
+    $repository_owner \
+    $repository_name \
+    $release_name \
+    $release_id \
+    /work/build-results/documentation/ \
+    dependencies.svg  \
+    "application/xml"
 
 #
 # PUBLISH dist/* TO NPMJS.COM
@@ -108,7 +127,12 @@ echo "//registry.npmjs.org/:always-auth=false" >> ~/.npmrc
 cd /work-private/dist
 npm --registry https://registry.npmjs.org/ --access public publish
 
-sleep 10
 
 # Refresh nopar mirror
+while : ; do
+    sleep 5
+    LATEST_VERSION_IN_NPM_MIRROR=$(curl --silent  "http://nopar.codeclou.io/@cloukit%2f${GWBT_REPO_NAME}" | jq -r .\"dist-tags\".latest)
+    [[ "$GWBT_TAG" == "$LATEST_VERSION_IN_NPM_MIRROR" ]] || break
+done
+
 curl -I "http://nopar.codeclou.io/-/package/@cloukit/${GWBT_REPO_NAME}/refresh"
