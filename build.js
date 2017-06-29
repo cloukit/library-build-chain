@@ -130,6 +130,8 @@ const buildPackage = (languageTarget, watch) => {
       shell.echo(chalk.red("NGD ERROR. STOP!"));
       return;
   }
+  shell.mv(`./documentation`, `./dist/`);
+
 }
 
 
