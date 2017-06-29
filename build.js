@@ -126,7 +126,7 @@ const buildPackage = (languageTarget, watch) => {
   //
   if (!argv.watch) {
     shell.cd(relativePath('../'));
-    const ngdResult = shell.exec('ngd --output-formats svg,json');
+    const ngdResult = shell.exec('ngd --output-formats svg,json --file src/components/*.module.ts');
     if (ngdResult.code !== 0) {
         shell.echo(chalk.red("NGD ERROR. STOP!"));
         return;
