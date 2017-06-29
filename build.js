@@ -124,13 +124,15 @@ const buildPackage = (languageTarget, watch) => {
   //
   // DEPENDENCY GRAPH
   //
-  shell.cd(relativePath('../'));
-  const ngdResult = shell.exec('ngd --output-formats svg,json');
-  if (ngdResult.code !== 0) {
-      shell.echo(chalk.red("NGD ERROR. STOP!"));
-      return;
+  if (!argv.watch) {
+    shell.cd(relativePath('../'));
+    const ngdResult = shell.exec('ngd --output-formats svg,json');
+    if (ngdResult.code !== 0) {
+        shell.echo(chalk.red("NGD ERROR. STOP!"));
+        return;
+    }
+    shell.mv(`./documentation`, `./dist/`);
   }
-  shell.mv(`./documentation`, `./dist/`);
 
 }
 
