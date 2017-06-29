@@ -105,3 +105,8 @@ echo "//registry.npmjs.org/:always-auth=false" >> ~/.npmrc
 
 cd /work-private/dist
 npm --registry https://registry.npmjs.org/ --access public publish
+
+sleep 5
+
+# Refresh nopar mirror
+curl -I "http://nopar.codeclou.io/-/package/@cloukit/${GWBT_REPO_NAME}/refresh"
