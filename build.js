@@ -51,7 +51,11 @@ const buildPackage = (languageTarget, watch) => {
     shell.echo(chalk.blue('>> =============='));
     shell.echo(chalk.blue('>> NPM INSTALL'));
     shell.echo(chalk.blue('>> =============='));
-    shell.exec('npm install');
+    const npmInstallResult = shell.exec('npm install');
+    if (npmInstallResult.code !== 0) {
+        shell.echo(chalk.red("NPM ERROR. STOP!"));
+        return;
+    }
   }
 
   //
