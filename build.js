@@ -89,6 +89,7 @@ const buildPackage = (languageTarget, watch) => {
       shell.echo(chalk.red("ROLLUP ERROR. STOP!"));
       return;
   }
+
   // ====================
   // DO ONLY ONCE FROM HERE
   if (languageTarget === 'es5') return;
@@ -120,6 +121,17 @@ const buildPackage = (languageTarget, watch) => {
     filter: file => /^.*[.]ts$/.test(file) || shell.test('-d', file) // *.d.ts files and folders!
   });
 
+  //
+  // DEPENDENCY GRAPH
+  //
+  shell.cd(relativePath('./'));
+  const ngdResult = shell.exec('ngd --output-formats svg,json');
+  if (ngdResult.code !== 0) {
+      shell.echo(chalk.red("NGD ERROR. STOP!"));
+      return;
+  }
+  shell.cp(`./documentation/dependencies.json`, `../dist/`);
+  shell.cp(`./documentation/dependencies.svg`, `../dist/`);
 }
 
 

@@ -18,7 +18,7 @@ rm -f /work-private/package-lock.json || true
 #
 cd /work-private/library-build-chain/
 npm config set registry http://nopar.codeclou.io/
-npm cache clear
+npm install -g @compodoc/ngd-cli
 npm install
 npm run build
 #sed -i "s/___COMMIT___/$GWBT_COMMIT_AFTER/" ./src/app/app.component.ts
