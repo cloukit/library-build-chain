@@ -17,7 +17,10 @@ rm -f /work-private/package-lock.json || true
 # BUILD
 #
 cd /work-private/library-build-chain/
+mkdir /work-private/npm-global/
 npm config set registry http://nopar.codeclou.io/
+npm config set prefix '/work-private/npm-global/'
+export PATH=$PATH:/work-private/npm-global/bin/
 npm install -g @compodoc/ngd-cli
 npm install
 npm run build
