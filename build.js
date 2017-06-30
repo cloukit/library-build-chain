@@ -147,7 +147,7 @@ const buildPackage = (languageTarget, watch) => {
         shell.echo(chalk.red("COMPODOC ERROR. STOP!"));
         return;
     }
-    shell.mv(relativePath('../build/documentation'), (relativePath('../'));
+    shell.mv(relativePath('../build/documentation'), relativePath('../'));
     if (shell.test('-d', relativePath('../documentation/fonts/'))) shell.rm('-rf', relativePath('../documentation/fonts/'));
     if (shell.test('-d', relativePath('../documentation/images/'))) shell.rm('-rf', relativePath('../documentation/images/'));
     if (shell.test('-d', relativePath('../documentation/styles/'))) shell.rm('-rf', relativePath('../documentation/styles/'));
