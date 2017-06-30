@@ -136,7 +136,7 @@ const buildPackage = (languageTarget, watch) => {
   for (let i=0; i<templateFiles.length; i++) {
     shell.exec(`sed -i -e 's@src="[^"]*js/@src="${cdnUrl}/dist/js/@g' ../library-build-chain/node_modules/compodoc/src/templates/${templateFiles[i]}`);
   }
-  shell.exec(`sed -i -e 's@href="[^"]*styles/@href="${cdnUrl}/dist/css/@g' ../library-build-chain/node_modules/compodoc/src/templates/page.hbs`);
+  shell.exec(`sed -i -e 's@href="[^"]*styles/style.css@href="${cdnUrl}/style.css/@g' ../library-build-chain/node_modules/compodoc/src/templates/page.hbs`);
   shell.exec(`sed -i -e 's@href="[^"]*images/favicon.ico@href="${cdnUrl}/images/favicon.ico@g' ../library-build-chain/node_modules/compodoc/src/templates/page.hbs`);
 
   // EXECUTE COMPODOC
