@@ -122,8 +122,20 @@ const buildPackage = (languageTarget, watch) => {
   });
 
   //
-  // DEPENDENCY GRAPH
+  // COMPODOC
   //
+  /*
+
+  cd build
+  # PATCH page template
+  wget https://cloukit.github.io/compodoc-theme/patches/1.0.0-beta.10/src/templates/page.hbs -O ../library-build-chain/node_modules/compodoc/src/templates/page.hbs
+  ../library-build-chain/node_modules/compodoc/bin/compodoc --tsconfig tsconfig-es5.json --hideGenerator --disableSourceCode src
+  rm -rf documentation/fonts/
+  rm -rf documentation/images/
+  rm -rf documentation/styles/
+  rm -rf documentation/js/
+  */
+
   if (!argv.watch) {
     shell.cd(relativePath('../'));
     const ngdResult = shell.exec('ngd --output-formats svg,json --file src/components/*.module.ts');
