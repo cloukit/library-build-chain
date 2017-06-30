@@ -124,26 +124,30 @@ const buildPackage = (languageTarget, watch) => {
   //
   // COMPODOC
   //
-  /*
 
-  cd build
-  # PATCH page template
-  wget https://cloukit.github.io/compodoc-theme/patches/1.0.0-beta.10/src/templates/page.hbs -O ../library-build-chain/node_modules/compodoc/src/templates/page.hbs
-  ../library-build-chain/node_modules/compodoc/bin/compodoc --tsconfig tsconfig-es5.json --hideGenerator --disableSourceCode src
-  rm -rf documentation/fonts/
-  rm -rf documentation/images/
-  rm -rf documentation/styles/
-  rm -rf documentation/js/
-  */
+  // PATCH CDN URLS
+  if (shell.test('-d', relativePath('../documentation'))) shell.rm('-rf', relativePath('../documentation/'));
+  shell.cd(relativePath('../build'));
+  const cdnUrl = 'https://cloukit.github.io/compodoc-theme/theme/1.0.0-beta.10';
+  const templateFiles = [ 'page.hbs', 'partials/component.hbs', 'partials/module.hbs', 'partials/routes.hbs', 'partials/overview.hbs' ];
+  for (let i=0; i<file.templateFiles.length; i++) {
+    shell.exec(`sed -i -e 's@src="[^"]*js/@src="${cdnUrl}/dist/js/@g' ../library-build-chain/node_modules/compodoc/src/templates/${templateFiles[i]}`);
+  }
+  shell.exec(`sed -i -e 's@href="[^"]*styles/@href="${cdnUrl}/dist/css/@g' ../library-build-chain/node_modules/compodoc/src/templates/page.hbs`);
+  shell.exec(`sed -i -e 's@href="[^"]*images/favicon.ico@href="${cdnUrl}/images/favicon.ico@g' ../library-build-chain/node_modules/compodoc/src/templates/page.hbs`);
 
+  // EXECUTE COMPODOC
   if (!argv.watch) {
     shell.cd(relativePath('../'));
-    const ngdResult = shell.exec('ngd --output-formats svg,json --file src/components/*.module.ts');
-    if (ngdResult.code !== 0) {
-        shell.echo(chalk.red("NGD ERROR. STOP!"));
+    const compodocResult = shell.exec(`../library-build-chain/node_modules/compodoc/bin/index-cli.js --tsconfig tsconfig-es5.json --hideGenerator --disablePrivateOrInternalSupport --name "${packageJson.name} v${packageJson.version}" src`);
+    if (compodocResult.code !== 0) {
+        shell.echo(chalk.red("COMPODOC ERROR. STOP!"));
         return;
     }
-    shell.mv(`./documentation`, `./dist/`);
+    if (shell.test('-d', relativePath('../documentation/fonts/'))) shell.rm('-rf', relativePath('../documentation/fonts/'));
+    if (shell.test('-d', relativePath('../documentation/images/'))) shell.rm('-rf', relativePath('../documentation/images/'));
+    if (shell.test('-d', relativePath('../documentation/styles/'))) shell.rm('-rf', relativePath('../documentation/styles/'));
+    if (shell.test('-d', relativePath('../documentation/js/'))) shell.rm('-rf', relativePath('../documentation/js/'));
   }
 
 }
