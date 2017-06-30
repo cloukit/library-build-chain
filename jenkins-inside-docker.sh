@@ -23,8 +23,9 @@ export SASS_BINARY_SITE='http://github-proxy.home.codeclou.io/sass/node-sass/rel
 npm config set prefix '/work-private/npm-global/'
 export PATH=$PATH:/work-private/npm-global/bin/
 npm install -g yarn
+npm install -g node-deploy-essentials
 yarn install
-yarn run build
+yarn build
 #sed -i "s/___COMMIT___/$GWBT_COMMIT_AFTER/" ./src/app/app.component.ts
 #sed -i "s/___BUILDSTAMP___/${BUILD_ID}/" ./src/app/app.component.ts
 
@@ -52,6 +53,21 @@ else
   echo "TAG DETECTED. CONTINUE PUBLISH!"
 fi
 
+#
+# PUBLISH COMPODOC
+#
+mv documentation /work/build-results/
+chmod -r 777 /work/build-results/documentation/
+
+ndes deployToGitHubBranch \
+  as "$GITHUB_COMMIT_USER" \
+  withEmail "$GITHUB_COMMIT_EMAIL" \
+  withGitHubAuthUsername "$GITHUB_AUTH_USER" \
+  withGitHubAuthToken "$GITHUB_AUTH_TOKEN" \
+  toRepository "https://github.com/cloukit/${GWBT_REPO_NAME}.git" \
+  branch "gh-pages" \
+  fromSource /work/build-results/documentation/ \
+  intoSubdirectory component-doc/${GWBT_TAG}
 
 # =============================================================
 #
