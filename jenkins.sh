@@ -46,7 +46,6 @@ docker run \
     -e NPMJS_PASSWORD=$NPMJS_PASSWORD \
     -e NPMJS_USERNAME=$NPMJS_USERNAME \
     -e NPMJS_EMAIL=$NPMJS_EMAIL \
-    -e SASS_BINARY_SITE="http://node-sass-binary-mirror.codeclou.io/sass/node-sass/releases/download" \
     --volume $WORKSPACE:/work \
     codeclou/docker-nodejs:7.5.0.1 \
     bash /work/library-build-chain/jenkins-inside-docker.sh

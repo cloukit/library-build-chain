@@ -18,12 +18,13 @@ rm -f /work-private/package-lock.json || true
 #
 cd /work-private/library-build-chain/
 mkdir /work-private/npm-global/
-npm config set registry http://nopar.codeclou.io/
+npm config set registry http://npm-proxy.home.codeclou.io/
+export SASS_BINARY_SITE='http://github-proxy.home.codeclou.io/sass/node-sass/releases/download'
 npm config set prefix '/work-private/npm-global/'
 export PATH=$PATH:/work-private/npm-global/bin/
-npm install -g @compodoc/ngd-cli
-npm install
-npm run build
+npm install -g yarn
+yarn install
+yarn run build
 #sed -i "s/___COMMIT___/$GWBT_COMMIT_AFTER/" ./src/app/app.component.ts
 #sed -i "s/___BUILDSTAMP___/${BUILD_ID}/" ./src/app/app.component.ts
 
@@ -115,8 +116,8 @@ npm --registry https://registry.npmjs.org/ --access public publish
 # Refresh nopar mirror
 while : ; do
     sleep 5
-    LATEST_VERSION_IN_NPM_MIRROR=$(curl --silent  "http://nopar.codeclou.io/@cloukit%2f${GWBT_REPO_NAME}" | jq -r .\"dist-tags\".latest)
+    LATEST_VERSION_IN_NPM_MIRROR=$(curl --silent  "http://npm-proxy.home.codeclou.io/@cloukit%2f${GWBT_REPO_NAME}" | jq -r .\"dist-tags\".latest)
     [[ "$GWBT_TAG" == "$LATEST_VERSION_IN_NPM_MIRROR" ]] || break
 done
 
-curl -I "http://nopar.codeclou.io/-/package/@cloukit/${GWBT_REPO_NAME}/refresh"
+curl -I "http://npm-proxy.home.codeclou.io/-/package/@cloukit/${GWBT_REPO_NAME}/refresh"

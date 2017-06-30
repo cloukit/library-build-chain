@@ -65,8 +65,8 @@ Goto the library dir containing `metadata.json` and execute:
 ```bash
 git clone https://github.com/cloukit/library-build-chain.git library-build-chain
 cd library-build-chain
-npm install
-npm run build
+yarn install
+yarn run build
 ```
 
 Now there will be a `../dist/` directory containing everything that can now be published to npmjs.com
@@ -88,7 +88,7 @@ git push origin 1.0.2
 
   * (1) Create `manifest.json`
   * (2) Add `library-build-chain`, `build`, `dist` to `.gitignore`
-  * (3) Main file with exports is expected to be `../src/index.ts` 
+  * (3) Main file with exports is expected to be `../src/index.ts`
     * see example: https://github.com/cloukit/common
   * (4) place `jenkins.sh` at root
     * see example: https://github.com/cloukit/common/blob/master/jenkins.sh
