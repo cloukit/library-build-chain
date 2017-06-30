@@ -130,7 +130,7 @@ const buildPackage = (languageTarget, watch) => {
   shell.cd(relativePath('../build'));
   const cdnUrl = 'https://cloukit.github.io/compodoc-theme/theme/1.0.0-beta.10';
   const templateFiles = [ 'page.hbs', 'partials/component.hbs', 'partials/module.hbs', 'partials/routes.hbs', 'partials/overview.hbs' ];
-  for (let i=0; i<file.templateFiles.length; i++) {
+  for (let i=0; i<templateFiles.length; i++) {
     shell.exec(`sed -i -e 's@src="[^"]*js/@src="${cdnUrl}/dist/js/@g' ../library-build-chain/node_modules/compodoc/src/templates/${templateFiles[i]}`);
   }
   shell.exec(`sed -i -e 's@href="[^"]*styles/@href="${cdnUrl}/dist/css/@g' ../library-build-chain/node_modules/compodoc/src/templates/page.hbs`);
