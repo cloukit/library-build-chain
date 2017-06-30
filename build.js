@@ -124,6 +124,9 @@ const buildPackage = (languageTarget, watch) => {
   //
   // COMPODOC
   //
+  shell.echo(chalk.blue('>> =============='));
+  shell.echo(chalk.blue('>> CREATING COMPODOC'));
+  shell.echo(chalk.blue('>> =============='));
 
   // PATCH CDN URLS
   if (shell.test('-d', relativePath('../documentation'))) shell.rm('-rf', relativePath('../documentation/'));
@@ -138,7 +141,7 @@ const buildPackage = (languageTarget, watch) => {
 
   // EXECUTE COMPODOC
   if (!argv.watch) {
-    shell.cd(relativePath('../'));
+    shell.cd(relativePath('../build'));
     const compodocResult = shell.exec(`../library-build-chain/node_modules/compodoc/bin/index-cli.js --tsconfig tsconfig-es5.json --hideGenerator --disablePrivateOrInternalSupport --name "${packageJson.name} v${packageJson.version}" src`);
     if (compodocResult.code !== 0) {
         shell.echo(chalk.red("COMPODOC ERROR. STOP!"));
