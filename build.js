@@ -49,11 +49,11 @@ const buildPackage = (languageTarget, watch) => {
     let packageJson = packageJsonTemplate.generate(manifest.moduleId, manifest.version, manifest.description, 'devDependencies', Object.assign({}, manifest.peerDependencies, manifest.devDependencies), 'dependencies', manifest.dependencies, 'peerDependencies', {});
     fs.writeFileSync(relativePath(`../build/package.json`), JSON.stringify(packageJson, null, 2));
     shell.echo(chalk.blue('>> =============='));
-    shell.echo(chalk.blue('>> NPM INSTALL'));
+    shell.echo(chalk.blue('>> YARN INSTALL'));
     shell.echo(chalk.blue('>> =============='));
-    const npmInstallResult = shell.exec('npm install');
+    const npmInstallResult = shell.exec('yarn install');
     if (npmInstallResult.code !== 0) {
-        shell.echo(chalk.red("NPM ERROR. STOP!"));
+        shell.echo(chalk.red("YARN ERROR. STOP!"));
         return;
     }
   }

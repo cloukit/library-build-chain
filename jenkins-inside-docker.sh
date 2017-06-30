@@ -39,6 +39,8 @@ if [ -d ".git" ]; then rm -rf .git; fi
 zip -r dist.zip *
 mv dist.zip /work/build-results/
 chmod 777 /work/build-results/dist.zip
+mv documentation /work/build-results/
+chmod -r 777 /work/build-results/documentation/
 ls -lah
 cd /work-private/
 
@@ -56,9 +58,6 @@ fi
 #
 # PUBLISH COMPODOC
 #
-mv documentation /work/build-results/
-chmod -r 777 /work/build-results/documentation/
-
 ndes deployToGitHubBranch \
   as "$GITHUB_COMMIT_USER" \
   withEmail "$GITHUB_COMMIT_EMAIL" \
