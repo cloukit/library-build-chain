@@ -39,6 +39,7 @@ if [ -d ".git" ]; then rm -rf .git; fi
 zip -r dist.zip *
 mv dist.zip /work/build-results/
 chmod 777 /work/build-results/dist.zip
+mv /work-private/documentation /work/build-results/
 chmod -r 777 /work/build-results/documentation/
 ls -lah
 cd /work-private/
