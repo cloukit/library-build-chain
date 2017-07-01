@@ -49,5 +49,5 @@ docker run \
     -e NPMJS_USERNAME=$NPMJS_USERNAME \
     -e NPMJS_EMAIL=$NPMJS_EMAIL \
     --volume $WORKSPACE:/work \
-    codeclou/docker-nodejs:7.5.0.1 \
+    codeclou/docker-nodejs:yarn-0.0.27.5-npm-5.0.4-nodejs-7.10.0 \
     bash /work/library-build-chain/jenkins-inside-docker.sh

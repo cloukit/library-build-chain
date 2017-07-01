@@ -22,7 +22,6 @@ npm config set registry http://npm-proxy.home.codeclou.io/
 export SASS_BINARY_SITE='http://github-proxy.home.codeclou.io/sass/node-sass/releases/download'
 npm config set prefix '/work-private/npm-global/'
 export PATH=$PATH:/work-private/npm-global/bin/
-npm install -g yarn
 npm install -g node-deploy-essentials
 yarn install
 yarn build
