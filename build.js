@@ -142,7 +142,7 @@ const buildPackage = (languageTarget, watch) => {
   // EXECUTE COMPODOC
   if (!argv.watch) {
     shell.cd(relativePath('../build'));
-    const compodocResult = shell.exec(`../library-build-chain/node_modules/compodoc/bin/index-cli.js --tsconfig tsconfig-es5.json --hideGenerator --disableCoverage --disablePrivateOrInternalSupport --name "${packageJson.name} v${packageJson.version}" src`);
+    const compodocResult = shell.exec(`../library-build-chain/node_modules/compodoc/bin/index-cli.js --tsconfig tsconfig-es5.json --disableCoverage --disablePrivateOrInternalSupport --name "${packageJson.name} v${packageJson.version}" src`);
     if (compodocResult.code !== 0) {
         shell.echo(chalk.red("COMPODOC ERROR. STOP!"));
         return;
