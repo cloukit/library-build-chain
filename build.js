@@ -138,7 +138,7 @@ const buildPackage = (languageTarget, watch) => {
   }
   shell.exec(`sed -i -e 's@href="[^"]*styles/style.css@href="${cdnUrl}/style.css@g' ../library-build-chain/node_modules/compodoc/src/templates/page.hbs`);
   shell.exec(`sed -i -e 's@href="[^"]*images/favicon.ico@href="${cdnUrl}/images/favicon.ico@g' ../library-build-chain/node_modules/compodoc/src/templates/page.hbs`);
-  shell.exec(`sed -i -e 's@src="[^"]*images/compodoc-vectorise.svg@href="${cdnUrl}/images/compodoc-logo.svg@g' ../library-build-chain/node_modules/compodoc/src/templates/partials/menu.hbs`);
+  shell.exec(`sed -i -e 's@src="[^"]*images/compodoc-vectorise.svg@src="${cdnUrl}/images/compodoc-logo.svg@g' ../library-build-chain/node_modules/compodoc/src/templates/partials/menu.hbs`);
 
   // EXECUTE COMPODOC
   if (!argv.watch) {
