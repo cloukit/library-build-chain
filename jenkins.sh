@@ -30,6 +30,7 @@ fi
 #
 # RUN DOCKERIZED BUILD
 #
+docker pull codeclou/docker-nodejs-chrome-xvfb:node-8.1.3-chome-59
 docker run \
     --tty \
     -e GITHUB_AUTH_USER=$GITHUB_AUTH_USER \
