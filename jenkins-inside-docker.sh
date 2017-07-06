@@ -25,9 +25,11 @@ export PATH=$PATH:/work-private/npm-global/bin/
 npm install -g node-deploy-essentials
 yarn install
 
+yarn build
+
 yarn test:unit:single
 
-yarn build
+
 #sed -i "s/___COMMIT___/$GWBT_COMMIT_AFTER/" ./src/app/app.component.ts
 #sed -i "s/___BUILDSTAMP___/${BUILD_ID}/" ./src/app/app.component.ts
 
