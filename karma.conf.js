@@ -33,7 +33,11 @@ module.exports = function(config) {
         customLaunchers: {
             ChromeSmall: {
                 base: 'Chrome',
-                flags: ['--window-size=300,300']
+                flags: [
+                  '--window-size=300,300',
+                  '--disable-gpu',
+                  '--no-sandbox',
+                ]
             }
         },
     });
