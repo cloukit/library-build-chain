@@ -27,6 +27,8 @@ yarn install
 
 yarn build
 
+# synmlink node_modules
+ln -s ./build/node_modules ../node_modules
 yarn test:unit:single
 
 
