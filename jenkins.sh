@@ -48,6 +48,7 @@ docker run \
     -e NPMJS_PASSWORD=$NPMJS_PASSWORD \
     -e NPMJS_USERNAME=$NPMJS_USERNAME \
     -e NPMJS_EMAIL=$NPMJS_EMAIL \
+    --shm-size=128M \
     --volume $WORKSPACE:/work \
-    codeclou/docker-nodejs:yarn-0.0.27.5-npm-5.0.4-nodejs-7.10.0 \
+    codeclou/docker-nodejs-chrome-xvfb:node-8.1.3-chome-59 \
     bash /work/library-build-chain/jenkins-inside-docker.sh
