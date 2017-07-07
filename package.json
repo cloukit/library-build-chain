@@ -5,6 +5,7 @@
   "author": "Bernhard Grünewaldt",
   "license": "MIT",
   "dependencies": {
+    "@angular/cli": "^1.2.0",
     "@angular/compiler": "^4.0.1",
     "@angular/compiler-cli": "^4.0.1",
     "@angular/core": "^4.0.1",
