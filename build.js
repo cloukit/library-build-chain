@@ -18,7 +18,10 @@ const tsconfigTemplate = require('./build-tsconfig-template.js');
 const packageJsonTemplate = require('./build-package-json-template.js');
 const currentDir = shell.pwd().stdout;
 const relativePath = (_path) => {
-  return path.resolve(currentDir, _path);
+  const absolutePath = path.resolve(currentDir, _path);
+  console.log(absolutePath);
+  process.exit();
+  return absolutePath;
 }
 
 /**
@@ -34,13 +37,13 @@ const buildPackage = (languageTarget, watch) => {
   if (shell.test('-f', relativePath('../build/package-lock.json'))) shell.rm('-rf', relativePath('../build/package-lock.json'));
   if (!shell.test('-d', relativePath('../build/'))) shell.mkdir(relativePath('../build/'));
   shell.cp('-R', relativePath('../src'), relativePath('../build'));
-  shell.cp('-R', relativePath('../manifest.json'), relativePath('../build'));
+  shell.cp('-R', relativePath('../package.json'), relativePath('../build/package_orig.json'));
 
   //
   // CD BUILD DIR
   //
   shell.cd(relativePath('../build/'));
-  const manifest = JSON.parse(shell.cat(relativePath('../build/manifest.json')));
+  const manifest = JSON.parse(shell.cat(relativePath('../build/package_orig.json')));
 
   //
   // GENERATE TEMPORARY LIBRARY package.json TO INSTALL PEER DEPENDENCIES DURING BUILD
