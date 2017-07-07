@@ -5,6 +5,7 @@
   "author": "Bernhard Grünewaldt",
   "license": "MIT",
   "dependencies": {
+    "@angular/cli": "1.2.0",
     "@angular/compiler": "^4.0.1",
     "@angular/compiler-cli": "^4.0.1",
     "@angular/core": "^4.0.1",
@@ -28,7 +29,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-spec-reporter": "0.0.31",
     "karma-typescript": "^3.0.4",
-    "karma-typescript-angular2-transform": "^1.0.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "rollup": "^0.41.6",
