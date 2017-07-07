@@ -1,16 +1,10 @@
 {
-  "name": "@cloukit/ng-library-build",
-  "version": "1.0.1",
+  "name": "@cloukit/library-build-chain",
+  "version": "1.2.0",
   "description": "Common code to build cloukit Angular Modules",
   "author": "Bernhard Grünewaldt",
   "license": "MIT",
-  "scripts": {
-    "build": "node ./build.js",
-    "watch": "node ./build.js --watch",
-    "test:unit": "./node_modules/.bin/karma start",
-    "test:unit:single": "./node_modules/.bin/karma start --single-run"
-  },
-  "devDependencies": {
+  "dependencies": {
     "@angular/compiler": "^4.0.1",
     "@angular/compiler-cli": "^4.0.1",
     "@angular/core": "^4.0.1",
