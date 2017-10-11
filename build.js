@@ -14,7 +14,7 @@ const path = require('path');
 const Gaze = require('gaze').Gaze;
 const argv = require('yargs').argv
 const NGC_BINARY='./node_modules/@cloukit/library-build-chain/node_modules/.bin/ngc';
-const ANGULAR_CLI_BINARY='./node_modules/@cloukit/library-build-chain/node_modules/@angular/cli/bin/ng';
+const ANGULAR_CLI_BINARY='./node_modules/./bin/ng';
 const ROLLUP_BINARY='./node_modules/@cloukit/library-build-chain/node_modules/.bin/rollup';
 const tsconfigTemplate = require('./build-tsconfig-template.js');
 const packageJsonTemplate = require('./build-package-json-template.js');
@@ -187,7 +187,7 @@ if (argv.demo) {
   const packageJson = require('./package.json');
   const libName = packageJson.moduleId;
   const libNameCapitalized = capitalize(libName);
-  shell.cp('-r', `./node_modules/@cloukit/library-build-chain`, `./dist-demo`);
+  shell.cp('-r', `./node_modules/@cloukit/library-build-chain/demo-template`, `./dist-demo`);
   shell.cp('-r', `./src/*`, `./dist-demo/src/`);
   shell.sed('-i',
     '/*___IMPORTS___*/',

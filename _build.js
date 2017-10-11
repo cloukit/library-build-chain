@@ -12,10 +12,11 @@
 const shell = require('shelljs');
 
 if (shell.test('-d', 'dist')) {
-  shell.mkdir('dist');
+  shell.rm('-rf', 'dist');
 }
 shell.mkdir('dist');
-shell.cp('demo-template', './dist/');
+if (shell.test('-d', './demo-template/node_modules')) shell.rm('-rf', './demo-template/node_modules/');
+shell.cp('-r', 'demo-template', './dist/');
 shell.cp('build-package-json-template.js', './dist/');
 shell.cp('build-tsconfig-template.js', './dist/');
 shell.cp('build.js', './dist/');
