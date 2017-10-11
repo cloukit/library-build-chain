@@ -96,8 +96,8 @@ const buildPackage = (languageTarget, watch) => {
   const buildResult = shell.exec(`${NGC_BINARY} -p ./tsconfig-${languageTarget}.json`);
 
   if (buildResult.code !== 0) {
-      shell.echo(chalk.red("NGC ERROR. STOP!"));
-      return;
+    shell.echo(chalk.red("NGC ERROR. STOP!"));
+    return;
   } else {
     shell.echo(chalk.green(buildResult.stdout));
   }
@@ -107,8 +107,8 @@ const buildPackage = (languageTarget, watch) => {
   //
   const rollupResult = shell.exec(`${ROLLUP_BINARY} ./build/_${languageTarget}/src/${manifest.moduleId}.js -o ./dist/${manifest.moduleId}.${languageTarget}.js`);
   if (rollupResult.code !== 0) {
-      shell.echo(chalk.red("ROLLUP ERROR. STOP!"));
-      return;
+    shell.echo(chalk.red("ROLLUP ERROR. STOP!"));
+    return;
   }
 
   // ====================
@@ -174,7 +174,9 @@ if (argv.watch) {
   initialCleanup();
   buildPackage('es5', false);
   buildPackage('es2015', false);
-  buildCompodoc();
+  if (!argv.demo) {
+    buildCompodoc();
+  }
   shell.echo(chalk.green('>> =============='));
   shell.echo(chalk.green('>> DONE'));
   shell.echo(chalk.green('>> =============='));
@@ -184,20 +186,26 @@ if (argv.watch) {
 // START DEMO PROJECT
 //
 if (argv.demo) {
-  const packageJson = require('./package.json');
-  const libName = packageJson.moduleId;
-  const libNameCapitalized = capitalize(libName);
+  shell.echo(chalk.blue('>> creating dist-demo'));
   shell.cp('-r', `./node_modules/@cloukit/library-build-chain/demo-template`, `./dist-demo`);
   shell.cp('-r', `./src/*`, `./dist-demo/src/`);
+  const libraryImports = shell.cat('./src/demo/demo.imports.txt').stdout;
   shell.sed('-i',
-    '/*___IMPORTS___*/',
-    `import { Cloukit${libNameCapitalized}Module } from '../components/${libName}/${libName}.module';`,
-    './dist-demo/src/app/app.component.ts');
+    '[/][*]___IMPORTS___[*][/]',
+    libraryImports,
+    './dist-demo/src/app/app.module.ts');
+  const ngModuleImports = shell.cat('src/demo/demo.ngmodule.imports.txt').stdout;
   shell.sed('-i',
-    '/*___NGMODULE_IMPORTS___*/',
-    `Cloukit${libNameCapitalized}Module`,
-    './dist-demo/src/app/app.component.ts');
+    '[/][*]___NGMODULE_IMPORTS___[*][/]',
+    ngModuleImports,
+    './dist-demo/src/app/app.module.ts');
   shell.cd(relativePath('./dist-demo/'));
-  shell.exec(`yarn`);
-  shell.exec(`${ANGULAR_CLI_BINARY} serve`);
+  shell.echo(chalk.blue('>> yarn install (this takes time!)'));
+  shell.exec(`yarn config set "strict-ssl" false && yarn`);
+  shell.echo(chalk.blue('>> ng build'));
+  shell.exec(`ng build`);
+  if (argv.run) {
+    shell.echo(chalk.blue('>> ng serve'));
+    shell.exec(`ng serve`);
+  }
 }

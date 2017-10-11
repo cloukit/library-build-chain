@@ -11,9 +11,23 @@ So what happens when I am in my Library e.g. toggle and want the demo angular pr
    * `./src/demo/demo.component.html`
    * `./src/demo/demo.component.ts`
    * Those files should contain the whole demo
- * 4. The `dist-demo/src/app/app.component.ts`  is patched for:
-   * `/*___IMPORTS___*/` is replaced by e.g. `import { CloukitToggleModule } from '../components/toggle/toggle.module';`
-   * `/*___NGMODULE_IMPORTS___*/` is replaced by e.g. `CloukitToggleModule`
- * 5. `ng serve` is executed internally and your demo is hosted at http://localhost:4200
+ * 4. The `dist-demo/src/app/app.component.ts`  is patched. (See pagination for example)
+   * `/*___IMPORTS___*/` is replaced by e.g. `src/demo/demo.imports.txt'`
+   * `/*___NGMODULE_IMPORTS___*/` is replaced by e.g. `src/demo/demo.ngmodule.imports.txt`
+ * 5. `yarn start:demo` is executed internally and your demo is hosted at http://localhost:4200
   
  
+Put this into your libraries `package.json`
+
+```
+  "scripts": {
+    "build": "node ./node_modules/@cloukit/library-build-chain/build.js",
+    "build:demo": "node ./node_modules/@cloukit/library-build-chain/build.js --demo",
+    "start:demo": "node ./node_modules/@cloukit/library-build-chain/build.js --demo --run",
+    "watch": "node ./node_modules/@cloukit/library-build-chain/build.js --watch",
+...    
+  "devDependencies": {
+    "@cloukit/library-build-chain": "1.4.0"
+  },
+```
+
