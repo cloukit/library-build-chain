@@ -189,14 +189,14 @@ if (argv.demo) {
   shell.echo(chalk.blue('>> creating dist-demo'));
   shell.cp('-r', `./node_modules/@cloukit/library-build-chain/demo-template`, `./dist-demo`);
   shell.cp('-r', `./src/*`, `./dist-demo/src/`);
-  const libraryImports = shell.cat('./src/demo/demo.imports.txt');
+  const libraryImports = shell.cat('./src/demo/demo.imports.txt').stdout;
   shell.sed('-i',
-    '/*___IMPORTS___*/',
+    '[/][*]___IMPORTS___[*][/]',
     libraryImports,
     './dist-demo/src/app/app.module.ts');
-  const ngModuleImports = shell.cat('src/demo/demo.ngmodule.imports.txt');
+  const ngModuleImports = shell.cat('src/demo/demo.ngmodule.imports.txt').stdout;
   shell.sed('-i',
-    '/*___NGMODULE_IMPORTS___*/',
+    '[/][*]___NGMODULE_IMPORTS___[*][/]',
     ngModuleImports,
     './dist-demo/src/app/app.module.ts');
   shell.cd(relativePath('./dist-demo/'));
