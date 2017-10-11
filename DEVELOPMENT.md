@@ -96,99 +96,33 @@ git push origin 1.0.2
     * see example: https://github.com/cloukit/toggle/blob/master/.gitignore
   * (3) Main file with exports is expected to be `../src/index.ts`
     * see example: https://github.com/cloukit/toggle
-  * (4) place `jenkins.sh` at root
-    * see example: https://github.com/cloukit/toggle/blob/master/jenkins.sh
-  * (5) add Webhook to codeclou.io jenkins
-  * (6) Create Jenkins Job for project with convention "cloukit---COMPONENTNAME"
+  * (4) add Webhook to codeclou.io jenkins
+  * (5) Create Jenkins Pipeline Job for project with convention "cloukit---COMPONENTNAME"
 
 -----
 
 
 &nbsp;
 
-### Howto Link Lib during Development
+### Howto test a Library during Development
 
-(1) Go to component project and type to build the component
+Due to `npm link` problems we use the `demo-template` which starts a full angular project using angular-cli
+with our project included.
 
-```
-cd toggle
-yarn
-```
+So what happens when I am in my Library e.g. toggle and want the demo angular project to build?
 
-(2) Now `dist/` folder appeared:
-
-```
-cd dist/
-yarn link
-```
-
-(3) Link into project
-
-
-```
-cd my-other-component
-yarn link @cloukit/toggle
-```
-
-(4) Now you should be able to do in your testproject
-
-```typescript
-import { FooModule } from '@cloukit/toggle';
-```
-
------
-
-&nbsp;
-
-### Jenkins Job Setup
-
-JobTrigger via Webhook and ANSI Colors plugin active:
-
-```bash
-#!/bin/bash
-
-set -e
-
-# ############################################################################# #
-# And: https://github.com/codeclou/jenkins-github-webhook-build-trigger-plugin  #
-# ############################################################################# #
-#
-# ENV VARS
-#
-# $GITHUB_AUTH_TOKEN is exported globally in Jenkins Configuration
-
-#
-# Cleanup before run
-#
-rm -rf $WORKSPACE/.[^.] .??* || true # Delete hidden files
-rm -rf $WORKSPACE/* || true          # Delete normal files
-cd $WORKSPACE
-
-#
-# Prevent manual Job starts
-#
-if [[ -z "$GWBT_COMMIT_AFTER" ]]
-then
-    echo "I DON'T WANT JOBS STARTED MANUALLY! ONLY VIA GITHUB WEBHOOK!"
-    exit 1
-fi
+ * 1. Demo-Tamplate `./node-modules/@cloukit/demo-template` is copied to `./dist-demo/`
+ * 2. The component code `./src/*` is copied to `dist-demo/src/*`
+ * 3. Your library MUST have the files:
+   * `./src/demo/demo.component.html`
+   * `./src/demo/demo.component.ts`
+   * Those files should contain the whole demo
+ * 4. The `dist-demo/src/app/app.component.ts`  is patched for:
+   * `/*___IMPORTS___*/` is replaced by e.g. `import { CloukitToggleModule } from '../components/toggle/toggle.module';`
+   * `/*___NGMODULE_IMPORTS___*/` is replaced by e.g. `CloukitToggleModule`
+ * 5. `ng serve` is executed internally and your demo is hosted at http://localhost:4200
+  
+ 
 
 
-#
-# CLONE AND BUILD - Since either TAG or BRANCH is empty, this will clone all tags and branches
-#
-git clone --single-branch \
-          --branch ${GWBT_BRANCH}${GWBT_TAG} \
-          https://${GITHUB_AUTH_TOKEN}@github.com/${GWBT_REPO_FULL_NAME}.git .
-git reset --hard $GWBT_COMMIT_AFTER
 
-#
-# JENKINS.SH
-#
-if [ -f jenkins.sh ]
-then
-  bash jenkins.sh
-else
-  echo "no jenkins.sh => no build :)"
-fi
-```

@@ -3638,6 +3638,10 @@ lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://nexus.k8s.home.codeclou.io:32555/repository/npm/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
 
+lodash.capitalize@^4.2.1:
+  version "4.2.1"
+  resolved "https://nexus.k8s.home.codeclou.io:32555/repository/npm/lodash.capitalize/-/lodash.capitalize-4.2.1.tgz#f826c9b4e2a8511d84e3aca29db05e1a4f3b72a9"
+
 lodash.clonedeep@^4.3.2, lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://nexus.k8s.home.codeclou.io:32555/repository/npm/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
@@ -5293,9 +5297,11 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^2.0.0"
     inherits "^2.0.1"
 
-rollup@^0.50.0:
-  version "0.50.0"
-  resolved "https://nexus.k8s.home.codeclou.io:32555/repository/npm/rollup/-/rollup-0.50.0.tgz#4c158f4e780e6cb33ff0dbfc184a52cc58cd5f3b"
+rollup@0.41.6:
+  version "0.41.6"
+  resolved "https://nexus.k8s.home.codeclou.io:32555/repository/npm/rollup/-/rollup-0.41.6.tgz#e0d05497877a398c104d816d2733a718a7a94e2a"
+  dependencies:
+    source-map-support "^0.4.0"
 
 rxjs@^5.4.2:
   version "5.4.3"

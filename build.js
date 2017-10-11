@@ -7,12 +7,14 @@
  */
 const shell = require('shelljs');
 const chalk = require('chalk');
+const capitalize = require('lodash.capitalize');
 const fs = require('fs');
 const fse = require('fs-extra');
 const path = require('path');
 const Gaze = require('gaze').Gaze;
 const argv = require('yargs').argv
 const NGC_BINARY='./node_modules/@cloukit/library-build-chain/node_modules/.bin/ngc';
+const ANGULAR_CLI_BINARY='./node_modules/@cloukit/library-build-chain/node_modules/@angular/cli/bin/ng';
 const ROLLUP_BINARY='./node_modules/@cloukit/library-build-chain/node_modules/.bin/rollup';
 const tsconfigTemplate = require('./build-tsconfig-template.js');
 const packageJsonTemplate = require('./build-package-json-template.js');
@@ -20,7 +22,45 @@ const currentDir = shell.pwd().stdout;
 const relativePath = (_path) => {
   const absolutePath = path.resolve(currentDir, _path);
   return absolutePath;
-}
+};
+
+//
+// COMPODOC
+//
+const buildCompodoc = () => {
+  //
+  // COMPODOC
+  //
+  shell.echo(chalk.blue('>> =============='));
+  shell.echo(chalk.blue('>> CREATING COMPODOC'));
+  shell.echo(chalk.blue('>> =============='));
+
+  // PATCH CDN URLS
+  if (shell.test('-d', relativePath('./documentation'))) shell.rm('-rf', relativePath('./documentation/'));
+  shell.cd(relativePath('./'));
+  const cdnUrl = 'https://cloukit.github.io/compodoc-theme/theme/1.0.0-beta.10';
+  const templateFiles = [ 'page.hbs', 'partials/component.hbs', 'partials/module.hbs', 'partials/routes.hbs', 'partials/overview.hbs' ];
+  for (let i=0; i<templateFiles.length; i++) {
+    shell.exec(`sed -i -e 's@src="[^"]*js/@src="${cdnUrl}/dist/js/@g' ./node_modules/compodoc/src/templates/${templateFiles[i]}`);
+  }
+  shell.exec(`sed -i -e 's@href="[^"]*styles/style.css@href="${cdnUrl}/style.css@g' ./node_modules/compodoc/src/templates/page.hbs`);
+  shell.exec(`sed -i -e 's@href="[^"]*images/favicon.ico@href="${cdnUrl}/images/favicon.ico@g' ./node_modules/compodoc/src/templates/page.hbs`);
+  shell.exec(`sed -i -e 's@src="[^"]*images/compodoc-vectorise.svg@src="${cdnUrl}/images/compodoc-logo.svg@g' ./node_modules/compodoc/src/templates/partials/menu.hbs`);
+
+  // EXECUTE COMPODOC
+  if (!argv.watch) {
+    const compodocResult = shell.exec(`./node_modules/compodoc/bin/index-cli.js --tsconfig tsconfig-es5.json --disableCoverage --disablePrivateOrInternalSupport --name "${packageJson.name} v${packageJson.version}" src`);
+    if (compodocResult.code !== 0) {
+      shell.echo(chalk.red("COMPODOC ERROR. STOP!"));
+      return;
+    }
+    if (shell.test('-d', relativePath('./documentation/fonts/'))) shell.rm('-rf', relativePath('./documentation/fonts/'));
+    if (shell.test('-d', relativePath('./documentation/images/'))) shell.rm('-rf', relativePath('./documentation/images/'));
+    if (shell.test('-d', relativePath('./documentation/styles/'))) shell.rm('-rf', relativePath('./documentation/styles/'));
+    if (shell.test('-d', relativePath('./documentation/js/'))) shell.rm('-rf', relativePath('./documentation/js/'));
+  }
+};
+
 
 /**
  * Build the package to dist
@@ -102,40 +142,8 @@ const buildPackage = (languageTarget, watch) => {
     filter: file => /^.*[.]ts$/.test(file) || shell.test('-d', file) // *.d.ts files and folders!
   });
   shell.echo(chalk.green('done'));
+};
 
-  //
-  // COMPODOC
-  //
-  shell.echo(chalk.blue('>> =============='));
-  shell.echo(chalk.blue('>> CREATING COMPODOC'));
-  shell.echo(chalk.blue('>> =============='));
-
-  // PATCH CDN URLS
-  if (shell.test('-d', relativePath('./documentation'))) shell.rm('-rf', relativePath('./documentation/'));
-  shell.cd(relativePath('./'));
-  const cdnUrl = 'https://cloukit.github.io/compodoc-theme/theme/1.0.0-beta.10';
-  const templateFiles = [ 'page.hbs', 'partials/component.hbs', 'partials/module.hbs', 'partials/routes.hbs', 'partials/overview.hbs' ];
-  for (let i=0; i<templateFiles.length; i++) {
-    shell.exec(`sed -i -e 's@src="[^"]*js/@src="${cdnUrl}/dist/js/@g' ./node_modules/compodoc/src/templates/${templateFiles[i]}`);
-  }
-  shell.exec(`sed -i -e 's@href="[^"]*styles/style.css@href="${cdnUrl}/style.css@g' ./node_modules/compodoc/src/templates/page.hbs`);
-  shell.exec(`sed -i -e 's@href="[^"]*images/favicon.ico@href="${cdnUrl}/images/favicon.ico@g' ./node_modules/compodoc/src/templates/page.hbs`);
-  shell.exec(`sed -i -e 's@src="[^"]*images/compodoc-vectorise.svg@src="${cdnUrl}/images/compodoc-logo.svg@g' ./node_modules/compodoc/src/templates/partials/menu.hbs`);
-
-  // EXECUTE COMPODOC
-  if (!argv.watch) {
-    const compodocResult = shell.exec(`./node_modules/compodoc/bin/index-cli.js --tsconfig tsconfig-es5.json --disableCoverage --disablePrivateOrInternalSupport --name "${packageJson.name} v${packageJson.version}" src`);
-    if (compodocResult.code !== 0) {
-        shell.echo(chalk.red("COMPODOC ERROR. STOP!"));
-        return;
-    }
-    if (shell.test('-d', relativePath('./documentation/fonts/'))) shell.rm('-rf', relativePath('./documentation/fonts/'));
-    if (shell.test('-d', relativePath('./documentation/images/'))) shell.rm('-rf', relativePath('./documentation/images/'));
-    if (shell.test('-d', relativePath('./documentation/styles/'))) shell.rm('-rf', relativePath('./documentation/styles/'));
-    if (shell.test('-d', relativePath('./documentation/js/'))) shell.rm('-rf', relativePath('./documentation/js/'));
-  }
-
-}
 
 
 //
@@ -145,6 +153,7 @@ const initialCleanup = () => {
   if (shell.test('-d', relativePath('./documentation'))) shell.rm('-rf', relativePath('./documentation/'));
   if (shell.test('-d', relativePath('./dist'))) shell.rm('-rf', relativePath('./dist/'));
   shell.mkdir(relativePath('./dist/'));
+  if (shell.test('-d', relativePath('./dist-demo'))) shell.rm('-rf', relativePath('./dist-demo/'));
 };
 
 if (argv.watch) {
@@ -165,7 +174,30 @@ if (argv.watch) {
   initialCleanup();
   buildPackage('es5', false);
   buildPackage('es2015', false);
+  buildCompodoc();
   shell.echo(chalk.green('>> =============='));
   shell.echo(chalk.green('>> DONE'));
   shell.echo(chalk.green('>> =============='));
+}
+
+//
+// START DEMO PROJECT
+//
+if (argv.demo) {
+  const packageJson = require('./package.json');
+  const libName = packageJson.moduleId;
+  const libNameCapitalized = capitalize(libName);
+  shell.cp('-r', `./node_modules/@cloukit/library-build-chain`, `./dist-demo`);
+  shell.cp('-r', `./src/*`, `./dist-demo/src/`);
+  shell.sed('-i',
+    '/*___IMPORTS___*/',
+    `import { Cloukit${libNameCapitalized}Module } from '../components/${libName}/${libName}.module';`,
+    './dist-demo/src/app/app.component.ts');
+  shell.sed('-i',
+    '/*___NGMODULE_IMPORTS___*/',
+    `Cloukit${libNameCapitalized}Module`,
+    './dist-demo/src/app/app.component.ts');
+  shell.cd(relativePath('./dist-demo/'));
+  shell.exec(`yarn`);
+  shell.exec(`${ANGULAR_CLI_BINARY} serve`);
 }

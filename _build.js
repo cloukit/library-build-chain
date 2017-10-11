@@ -15,6 +15,7 @@ if (shell.test('-d', 'dist')) {
   shell.mkdir('dist');
 }
 shell.mkdir('dist');
+shell.cp('demo-template', './dist/');
 shell.cp('build-package-json-template.js', './dist/');
 shell.cp('build-tsconfig-template.js', './dist/');
 shell.cp('build.js', './dist/');
