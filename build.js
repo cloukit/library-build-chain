@@ -27,7 +27,7 @@ const relativePath = (_path) => {
 //
 // COMPODOC
 //
-const buildCompodoc = () => {
+const buildCompodoc = (packageJsonName, packageJsonVersion) => {
   //
   // COMPODOC
   //
@@ -49,7 +49,7 @@ const buildCompodoc = () => {
 
   // EXECUTE COMPODOC
   if (!argv.watch) {
-    const compodocResult = shell.exec(`./node_modules/compodoc/bin/index-cli.js --tsconfig tsconfig-es5.json --disableCoverage --disablePrivateOrInternalSupport --name "${packageJson.name} v${packageJson.version}" src`);
+    const compodocResult = shell.exec(`./node_modules/compodoc/bin/index-cli.js --tsconfig tsconfig-es5.json --disableCoverage --disablePrivateOrInternalSupport --name "${packageJsonName} v${packageJsonVersion}" src`);
     if (compodocResult.code !== 0) {
       shell.echo(chalk.red("COMPODOC ERROR. STOP!"));
       return;
@@ -175,7 +175,8 @@ if (argv.watch) {
   buildPackage('es5', false);
   buildPackage('es2015', false);
   if (!argv.demo) {
-    buildCompodoc();
+    const packageJson = JSON.parse(shell.cat(relativePath('./dist/package.json')).stdout);
+    buildCompodoc(packageJson.name, packageJson.name);
   }
   shell.echo(chalk.green('>> =============='));
   shell.echo(chalk.green('>> DONE'));
@@ -202,6 +203,10 @@ if (argv.demo) {
   shell.cd(relativePath('./dist-demo/'));
   shell.echo(chalk.blue('>> yarn install (this takes time!)'));
   shell.exec(`yarn config set "strict-ssl" false && yarn`);
-  shell.echo(chalk.blue('>> ng serve'));
-  shell.exec(`ng serve`);
+  shell.echo(chalk.blue('>> ng build'));
+  shell.exec(`ng build`);
+  if (argv.run) {
+    shell.echo(chalk.blue('>> ng serve'));
+    shell.exec(`ng serve`);
+  }
 }
