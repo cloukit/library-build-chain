@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { DemoComponent } from '../demo/demo.component';
 
-const ngDeclarations = [ AppComponent, DemoComponent ];
-const ngImports = [ BrowserModule ];
-const ngProviders = [ ];
-const ngBootStrap = [ ];
+const ngDeclarations: any = [ AppComponent, DemoComponent ];
+const ngImports: any = [ BrowserModule ];
+const ngProviders: any = [ ];
+const ngBootStrap: any = [ AppComponent ];
 
 /*___IMPORTS___*/
 
