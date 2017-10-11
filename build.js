@@ -194,11 +194,6 @@ if (argv.demo) {
     '[/][*]___IMPORTS___[*][/]',
     libraryImports,
     './dist-demo/src/app/app.module.ts');
-  const ngModuleImports = shell.cat('src/demo/demo.ngmodule.imports.txt').stdout;
-  shell.sed('-i',
-    '[/][*]___NGMODULE_IMPORTS___[*][/]',
-    ngModuleImports,
-    './dist-demo/src/app/app.module.ts');
   shell.cd(relativePath('./dist-demo/'));
   shell.echo(chalk.blue('>> yarn install (this takes time!)'));
   shell.exec(`yarn config set "strict-ssl" false && yarn`);
