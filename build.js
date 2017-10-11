@@ -7,7 +7,6 @@
  */
 const shell = require('shelljs');
 const chalk = require('chalk');
-const capitalize = require('lodash.capitalize');
 const fs = require('fs');
 const fse = require('fs-extra');
 const path = require('path');

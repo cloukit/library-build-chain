@@ -1,6 +1,6 @@
 {
   "name": "@cloukit/library-build-chain",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Common code to build cloukit Angular Modules",
   "author": "Bernhard Grünewaldt",
   "license": "MIT",
@@ -35,7 +35,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-spec-reporter": "0.0.31",
     "karma-typescript": "^3.0.4",
-    "lodash.capitalize": "^4.2.1",
     "mocha": "^4.0.1",
     "rollup": "0.41.6",
     "rxjs": "^5.4.2",
