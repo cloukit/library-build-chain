@@ -10,8 +10,10 @@ So what happens when I am in my Library e.g. toggle and want the demo angular pr
  * 3. Your library MUST have the files:
    * `./src/demo/demo.component.html`
    * `./src/demo/demo.component.ts`
-   * Those files should contain the whole demo
- * 4. The `dist-demo/src/app/app.component.ts`  is patched. (See pagination for example)
+   * `./src/demo/demo.imports.txt'`
+   * `./src/demo/demo.ngmodule.imports.txt`
+   * Those files should contain the whole demo code, see [pagination for example]().
+ * 4. The `dist-demo/src/app/app.component.ts`  is patched. 
    * `/*___IMPORTS___*/` is replaced by e.g. `src/demo/demo.imports.txt'`
    * `/*___NGMODULE_IMPORTS___*/` is replaced by e.g. `src/demo/demo.ngmodule.imports.txt`
  * 5. `yarn start:demo` is executed internally and your demo is hosted at http://localhost:4200
