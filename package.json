@@ -5,7 +5,8 @@
   "author": "Bernhard Grünewaldt",
   "license": "MIT",
   "scripts": {
-    "build": "node ./_build.js"
+    "build": "node ./_build.js",
+    "test": "echo \"ok\""
   },
   "dependencies": {
     "@angular/cli": "1.4.5",
