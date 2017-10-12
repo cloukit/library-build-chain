@@ -173,7 +173,7 @@ if (argv.watch) {
   buildPackage('es2015', false);
   if (!argv.demo) {
     const packageJson = JSON.parse(shell.cat(relativePath('./dist/package.json')).stdout);
-    buildCompodoc(packageJson.name, packageJson.name);
+    buildCompodoc(packageJson.name, packageJson.version);
   }
   shell.echo(chalk.green('>> =============='));
   shell.echo(chalk.green('>> DONE'));
@@ -181,7 +181,7 @@ if (argv.watch) {
 }
 
 //
-// START DEMO PROJECT
+// START OR BUILD DEMO PROJECT
 //
 if (argv.demo) {
   shell.echo(chalk.blue('>> creating dist-demo'));
@@ -207,10 +207,13 @@ if (argv.demo) {
     shell.echo(chalk.blue('>> yarn install (this takes time!)'));
     shell.exec(`yarn config set "strict-ssl" false && yarn`);
   }
-  shell.echo(chalk.blue('>> ng build'));
-  shell.exec(`ng build`);
   if (argv.run) {
     shell.echo(chalk.blue('>> ng serve'));
     shell.exec(`ng serve`);
+  } else {
+    const packageJson = JSON.parse(shell.cat(relativePath('./package.json')).stdout);
+    const baseHref = `/${packageJson.moduleId}/${packageJson.version}/demo/`;
+    shell.echo(chalk.blue(`>> ng build for baseHref: ${baseHref}`));
+    shell.exec(`ng build --base-href ${baseHref}`);
   }
 }
