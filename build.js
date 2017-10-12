@@ -27,6 +27,7 @@ const relativePath = (_path) => {
 // COMPODOC
 //
 const buildCompodoc = (packageJsonName, packageJsonVersion) => {
+  if (shell.test('-d', relativePath('./documentation'))) shell.rm('-rf', relativePath('./documentation/'));
   //
   // COMPODOC
   //
@@ -149,17 +150,14 @@ const buildPackage = (languageTarget, watch) => {
 // INIT
 //
 const initialCleanup = () => {
-  if (shell.test('-d', relativePath('./documentation'))) shell.rm('-rf', relativePath('./documentation/'));
   if (shell.test('-d', relativePath('./dist'))) shell.rm('-rf', relativePath('./dist/'));
   shell.mkdir(relativePath('./dist/'));
-  if (shell.test('-d', relativePath('./dist-demo'))) shell.rm('-rf', relativePath('./dist-demo/'));
 };
 
 if (argv.watch) {
   var gaze = new Gaze('./src/**/*');
   gaze.on('all', (event, filepath) => {
     try {
-      //initialCleanup();
       buildPackage('es5', true);
       buildPackage('es2015', true);
       shell.echo(chalk.green('>> =============='));
@@ -187,7 +185,17 @@ if (argv.watch) {
 //
 if (argv.demo) {
   shell.echo(chalk.blue('>> creating dist-demo'));
+  if (shell.test('-d', relativePath('./dist-demo'))) {
+    if (shell.test('-d', relativePath('./dist-demo/node_modules'))) {
+      shell.echo(chalk.blue('>> demo node_modules exists. retaining it.'));
+      shell.mv(relativePath('./dist-demo/node_modules'), relativePath('./_dist_demo_node_modules'));
+    }
+    shell.rm('-rf', relativePath('./dist-demo/'));
+  }
   shell.cp('-r', `./node_modules/@cloukit/library-build-chain/demo-template`, `./dist-demo`);
+  if (shell.test('-d', relativePath('./_dist_demo_node_modules'))) {
+    shell.mv(relativePath('_dist_demo_node_modules'), relativePath('./dist-demo/node_modules'));
+  }
   shell.cp('-r', `./src/*`, `./dist-demo/src/`);
   const libraryImports = shell.cat('./src/demo/demo.imports.txt').stdout;
   shell.sed('-i',
@@ -195,8 +203,10 @@ if (argv.demo) {
     libraryImports,
     './dist-demo/src/app/app.module.ts');
   shell.cd(relativePath('./dist-demo/'));
-  shell.echo(chalk.blue('>> yarn install (this takes time!)'));
-  shell.exec(`yarn config set "strict-ssl" false && yarn`);
+  if (argv.install) {
+    shell.echo(chalk.blue('>> yarn install (this takes time!)'));
+    shell.exec(`yarn config set "strict-ssl" false && yarn`);
+  }
   shell.echo(chalk.blue('>> ng build'));
   shell.exec(`ng build`);
   if (argv.run) {

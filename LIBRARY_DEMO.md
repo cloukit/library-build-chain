@@ -14,7 +14,7 @@ So what happens when I am in my Library e.g. toggle and want the demo angular pr
    * Those files should contain the whole demo code, see [pagination for example]().
  * 4. The `dist-demo/src/app/app.component.ts`  is patched. 
    * `/*___IMPORTS___*/` is replaced by e.g. `src/demo/demo.imports.txt'`
- * 5. `yarn start:demo` is executed internally and your demo is hosted at http://localhost:4200
+ * 5. `yarn build:demo` followed by `yarn start:demo` is executed internally and your demo is hosted at http://localhost:4200
   
  
 Put this into your libraries `package.json`
@@ -22,7 +22,7 @@ Put this into your libraries `package.json`
 ```
   "scripts": {
     "build": "node ./node_modules/@cloukit/library-build-chain/build.js",
-    "build:demo": "node ./node_modules/@cloukit/library-build-chain/build.js --demo",
+    "build:demo": "node ./node_modules/@cloukit/library-build-chain/build.js --demo --install",
     "start:demo": "node ./node_modules/@cloukit/library-build-chain/build.js --demo --run",
     "watch": "node ./node_modules/@cloukit/library-build-chain/build.js --watch",
     "test": "echo \"ok\""
