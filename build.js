@@ -186,6 +186,7 @@ if (argv.watch) {
 // START OR BUILD DEMO PROJECT
 //
 if (argv.demo) {
+  const packageJson = JSON.parse(shell.cat(relativePath('./package.json')).stdout);
   shell.echo(chalk.blue('>> creating dist-demo'));
   if (shell.test('-d', relativePath('./dist-demo'))) {
     if (shell.test('-d', relativePath('./dist-demo/node_modules'))) {
@@ -201,6 +202,10 @@ if (argv.demo) {
   shell.cp('-r', `./src/*`, `./dist-demo/src/`);
   shell.cd(relativePath('./dist-demo/'));
   if (argv.install) {
+    shell.echo(chalk.blue('>> injecting package.json dependencies into dist-demo/package.json'));
+    const distPackageJson = JSON.parse(shell.cat(relativePath('./dist-demo/package.json')).stdout);
+    distPackageJson.dependencies = packageJson.dependencies;
+    fs.writeFileSync(relativePath('./dist-demo/package.json'), JSON.stringify(distPackageJson, null, 2));
     shell.echo(chalk.blue('>> yarn install (this takes time!)'));
     shell.exec(`yarn config set "strict-ssl" false && yarn`);
   }
@@ -208,7 +213,6 @@ if (argv.demo) {
     shell.echo(chalk.blue('>> ng serve'));
     shell.exec(`ng serve`);
   } else {
-    const packageJson = JSON.parse(shell.cat(relativePath('./package.json')).stdout);
     const baseHref = `/${packageJson.moduleId}/${packageJson.version}/demo/`;
     shell.echo(chalk.blue(`>> ng build for baseHref: ${baseHref}`));
     shell.exec(`ng build --base-href ${baseHref}`);

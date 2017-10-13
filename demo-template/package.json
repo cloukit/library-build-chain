@@ -9,7 +9,10 @@
     "lint": "ng lint"
   },
   "private": true,
+  "dependenciesNOTICE": "WILL BE OVERWRITTEN BY ACTUAL DEMO! USE ONLY DEV_DEPENDENCIES HERE!",
   "dependencies": {
+  },
+  "devDependencies": {
     "@angular/animations": "^4.2.4",
     "@angular/common": "^4.2.4",
     "@angular/compiler": "^4.2.4",
@@ -21,9 +24,7 @@
     "@angular/router": "^4.2.4",
     "core-js": "^2.4.1",
     "rxjs": "^5.4.2",
-    "zone.js": "^0.8.14"
-  },
-  "devDependencies": {
+    "zone.js": "^0.8.14",
     "@angular/cli": "1.4.5",
     "@angular/compiler-cli": "^4.2.4",
     "@angular/language-service": "^4.2.4",
