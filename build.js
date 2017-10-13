@@ -168,16 +168,18 @@ if (argv.watch) {
     }
   });
 } else {
-  initialCleanup();
-  buildPackage('es5', false);
-  buildPackage('es2015', false);
   if (!argv.demo) {
-    const packageJson = JSON.parse(shell.cat(relativePath('./dist/package.json')).stdout);
-    buildCompodoc(packageJson.name, packageJson.version);
+    initialCleanup();
+    buildPackage('es5', false);
+    buildPackage('es2015', false);
+    if (!argv.demo) {
+      const packageJson = JSON.parse(shell.cat(relativePath('./dist/package.json')).stdout);
+      buildCompodoc(packageJson.name, packageJson.version);
+    }
+    shell.echo(chalk.green('>> =============='));
+    shell.echo(chalk.green('>> DONE'));
+    shell.echo(chalk.green('>> =============='));
   }
-  shell.echo(chalk.green('>> =============='));
-  shell.echo(chalk.green('>> DONE'));
-  shell.echo(chalk.green('>> =============='));
 }
 
 //
@@ -197,11 +199,6 @@ if (argv.demo) {
     shell.mv(relativePath('_dist_demo_node_modules'), relativePath('./dist-demo/node_modules'));
   }
   shell.cp('-r', `./src/*`, `./dist-demo/src/`);
-  const libraryImports = shell.cat('./src/demo/demo.imports.txt').stdout;
-  shell.sed('-i',
-    '[/][*]___IMPORTS___[*][/]',
-    libraryImports,
-    './dist-demo/src/app/app.module.ts');
   shell.cd(relativePath('./dist-demo/'));
   if (argv.install) {
     shell.echo(chalk.blue('>> yarn install (this takes time!)'));
