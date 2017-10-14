@@ -12,9 +12,9 @@ const fse = require('fs-extra');
 const path = require('path');
 const Gaze = require('gaze').Gaze;
 const argv = require('yargs').argv
-const NGC_BINARY='./node_modules/@cloukit/library-build-chain/node_modules/.bin/ngc';
-const ANGULAR_CLI_BINARY='./node_modules/./bin/ng';
-const ROLLUP_BINARY='./node_modules/@cloukit/library-build-chain/node_modules/.bin/rollup';
+const NGC_BINARY = './node_modules/@cloukit/library-build-chain/node_modules/.bin/ngc';
+const ANGULAR_CLI_BINARY = './node_modules/./bin/ng';
+const ROLLUP_BINARY = './node_modules/@cloukit/library-build-chain/node_modules/.bin/rollup';
 const tsconfigTemplate = require('./build-tsconfig-template.js');
 const packageJsonTemplate = require('./build-package-json-template.js');
 const currentDir = shell.pwd().stdout;
@@ -39,8 +39,8 @@ const buildCompodoc = (packageJsonName, packageJsonVersion) => {
   if (shell.test('-d', relativePath('./documentation'))) shell.rm('-rf', relativePath('./documentation/'));
   shell.cd(relativePath('./'));
   const cdnUrl = 'https://cloukit.github.io/compodoc-theme/theme/1.0.0-beta.10';
-  const templateFiles = [ 'page.hbs', 'partials/component.hbs', 'partials/module.hbs', 'partials/routes.hbs', 'partials/overview.hbs' ];
-  for (let i=0; i<templateFiles.length; i++) {
+  const templateFiles = ['page.hbs', 'partials/component.hbs', 'partials/module.hbs', 'partials/routes.hbs', 'partials/overview.hbs'];
+  for (let i = 0; i < templateFiles.length; i++) {
     shell.exec(`sed -i -e 's@src="[^"]*js/@src="${cdnUrl}/dist/js/@g' ./node_modules/compodoc/src/templates/${templateFiles[i]}`);
   }
   shell.exec(`sed -i -e 's@href="[^"]*styles/style.css@href="${cdnUrl}/style.css@g' ./node_modules/compodoc/src/templates/page.hbs`);
@@ -145,7 +145,6 @@ const buildPackage = (languageTarget, watch) => {
 };
 
 
-
 //
 // INIT
 //
@@ -163,7 +162,7 @@ if (argv.watch) {
       shell.echo(chalk.green('>> =============='));
       shell.echo(chalk.green('>> DONE'));
       shell.echo(chalk.green('>> =============='));
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   });
@@ -210,8 +209,19 @@ if (argv.demo) {
     shell.exec(`yarn config set "strict-ssl" false && yarn`);
   }
   if (argv.run) {
-    shell.echo(chalk.blue('>> ng serve'));
-    shell.exec(`ng serve`);
+    const wildcard = relativePath('./src/') + '/**/*';
+    shell.echo(chalk.blue(`>> watching ${wildcard} for changes`));
+    const gaze = new Gaze(wildcard);
+    gaze.on('all', (event, filepath) => {
+      try {
+        shell.echo(chalk.blue(`>> ${filepath} has changed. copying it to ./dist-demo/src/`));
+        shell.cp('-r', relativePath(`./src`) + '/*', relativePath(`./dist-demo/src/`));
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    shell.echo(chalk.blue('>> starting "ng serve" async'));
+    shell.exec(`ng serve`, {async: true});
   } else {
     const baseHref = `/${packageJson.moduleId}/${packageJson.version}/demo/`;
     shell.echo(chalk.blue(`>> ng build for baseHref: ${baseHref}`));
