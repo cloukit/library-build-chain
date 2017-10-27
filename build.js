@@ -185,6 +185,25 @@ if (argv.watch) {
 // START OR BUILD DEMO PROJECT
 //
 if (argv.demo) {
+  const injectStorySourceCodeAndCopyCode = () => {
+    shell.echo(chalk.blue('>> reading demo story source files'));
+    const files = fs.readdirSync(relativePath('./src/demo/stories/'));
+    if (files !== undefined && files !== null && files.length > 0) {
+      let storySource = '';
+      for (let i = 0; i < files.length; i++) {
+        const storyName = files[i];
+        let fileContent = fs.readFileSync(relativePath('./src/demo/stories/' + storyName));
+        fileContent = `${fileContent}`.replace(/`/g, '\\`');
+        storySource = storySource + `
+         case '${storyName}': { return \`${fileContent}\`; }
+         `;
+      }
+      shell.cp('-r', `./src/*`, `./dist-demo/src/`);
+      let storiesIndex = fs.readFileSync(relativePath('./src/demo/story-index.ts'));
+      storiesIndex = `${storiesIndex}`.replace(/[/][*]___INJECT_SOURCE___[*][/]/, storySource);
+      fs.writeFileSync(relativePath('./dist-demo/src/demo/story-index.ts'), storiesIndex);
+    }
+  };
   const packageJson = JSON.parse(shell.cat(relativePath('./package.json')).stdout);
   shell.echo(chalk.blue('>> creating dist-demo'));
   if (shell.test('-d', relativePath('./dist-demo'))) {
@@ -198,7 +217,7 @@ if (argv.demo) {
   if (shell.test('-d', relativePath('./_dist_demo_node_modules'))) {
     shell.mv(relativePath('_dist_demo_node_modules'), relativePath('./dist-demo/node_modules'));
   }
-  shell.cp('-r', `./src/*`, `./dist-demo/src/`);
+  injectStorySourceCodeAndCopyCode();
   shell.cd(relativePath('./dist-demo/'));
   if (argv.install) {
     shell.echo(chalk.blue('>> injecting package.json dependencies into dist-demo/package.json'));
@@ -215,7 +234,7 @@ if (argv.demo) {
     gaze.on('all', (event, filepath) => {
       try {
         shell.echo(chalk.blue(`>> ${filepath} has changed. copying it to ./dist-demo/src/`));
-        shell.cp('-r', relativePath(`./src`) + '/*', relativePath(`./dist-demo/src/`));
+        injectStorySourceCodeAndCopyCode();
       } catch (err) {
         console.log(err);
       }
