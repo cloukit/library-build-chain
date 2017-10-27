@@ -196,11 +196,12 @@ if (argv.demo) {
           let storyFileContent = fs.readFileSync(relativePath(`./src/demo/stories/${storyFile}`), 'utf-8');
           storySource[storyFile] = storyFileContent;
         }
-        shell.cp('-r', `./src/*`, `./dist-demo/src/`);
+        shell.cp('-r', relativePath(`./src/*`), relativePath(`./dist-demo/src/`));
         fs.writeFileSync(relativePath('./dist-demo/src/assets/demoStoriesSource.json'), JSON.stringify(storySource, null, 2));
       }
+    } else {
+      shell.echo(chalk.blue('>> SKIPPING > parsing demo story source files into json'));
     }
-    shell.echo(chalk.blue('>> SKIPPING > parsing demo story source files into json'));
   };
   const packageJson = JSON.parse(shell.cat(relativePath('./package.json')).stdout);
   shell.echo(chalk.blue('>> creating dist-demo'));
