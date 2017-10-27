@@ -13,6 +13,7 @@
   "dependencies": {
   },
   "devDependencies": {
+    "@cloukit/story": ">=1.0.0",
     "@angular/animations": "^4.2.4",
     "@angular/common": "^4.2.4",
     "@angular/compiler": "^4.2.4",
