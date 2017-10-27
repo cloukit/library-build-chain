@@ -186,23 +186,21 @@ if (argv.watch) {
 //
 if (argv.demo) {
   const injectStorySourceCodeAndCopyCode = () => {
-    shell.echo(chalk.blue('>> reading demo story source files'));
-    const files = fs.readdirSync(relativePath('./src/demo/stories/'));
-    if (files !== undefined && files !== null && files.length > 0) {
-      let storySource = '';
-      for (let i = 0; i < files.length; i++) {
-        const storyName = files[i];
-        let fileContent = fs.readFileSync(relativePath('./src/demo/stories/' + storyName));
-        fileContent = `${fileContent}`.replace(/`/g, '\\`');
-        storySource = storySource + `
-         case '${storyName}': { return \`${fileContent}\`; }
-         `;
+    if (shell.test('-d', relativePath('./src/demo/stories/'))) {
+      shell.echo(chalk.blue('>> parsing demo story source files into json'));
+      const files = fs.readdirSync(relativePath('./src/demo/stories/'));
+      if (files !== undefined && files !== null && files.length > 0) {
+        const storySource = {};
+        for (let i = 0; i < files.length; i++) {
+          const storyFile = files[i];
+          let storyFileContent = fs.readFileSync(relativePath(`./src/demo/stories/${storyFile}`), 'utf-8');
+          storySource[storyFile] = storyFileContent;
+        }
+        shell.cp('-r', `./src/*`, `./dist-demo/src/`);
+        fs.writeFileSync(relativePath('./dist-demo/src/assets/demoStoriesSource.json'), JSON.stringify(storySource, null, 2));
       }
-      shell.cp('-r', `./src/*`, `./dist-demo/src/`);
-      let storiesIndex = fs.readFileSync(relativePath('./src/demo/story-index.ts'));
-      storiesIndex = `${storiesIndex}`.replace(/[/][*]___INJECT_SOURCE___[*][/]/, storySource);
-      fs.writeFileSync(relativePath('./dist-demo/src/demo/story-index.ts'), storiesIndex);
     }
+    shell.echo(chalk.blue('>> SKIPPING > parsing demo story source files into json'));
   };
   const packageJson = JSON.parse(shell.cat(relativePath('./package.json')).stdout);
   shell.echo(chalk.blue('>> creating dist-demo'));
