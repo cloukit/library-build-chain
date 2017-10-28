@@ -221,7 +221,19 @@ if (argv.demo) {
   if (argv.install) {
     shell.echo(chalk.blue('>> injecting package.json dependencies into dist-demo/package.json'));
     const distPackageJson = JSON.parse(shell.cat(relativePath('./dist-demo/package.json')).stdout);
+    // DEPS
     distPackageJson.dependencies = packageJson.dependencies;
+    // MERGE DEV DEPS
+    const devDeps = distPackageJson.devDependencies;
+    if (devDeps !== undefined && devDeps !== null && packageJson.devDependencies !== undefined && packageJson.devDependencies !== null) {
+      const keys = Object.keys(packageJson.devDependencies);
+      for (let i=0;i<keys.length;i++) {
+        distPackageJson.devDependencies[keys[i]] = packageJson.devDependencies[keys[i]];
+      }
+    } else {
+      // OVERWRITE DEV DEPS
+      distPackageJson.devDependencies = packageJson.devDependencies;
+    }
     fs.writeFileSync(relativePath('./dist-demo/package.json'), JSON.stringify(distPackageJson, null, 2));
     shell.echo(chalk.blue('>> yarn install (this takes time!)'));
     shell.exec(`yarn config set "strict-ssl" false && yarn`);
