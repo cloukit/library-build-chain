@@ -209,7 +209,7 @@ ng generate library @cloukit/story --prefix cloukit
 See https://github.com/cloukit/library-build-chain on how to build, start and publish library.
 ```
 
-(8.1.6) Migrate README.md from old project to root
+(8.1.6) Migrate README.md and LICENSE from old project to root
 
 (8.1.7) Add to  `.gitignore`
 
