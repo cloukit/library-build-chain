@@ -53,6 +53,12 @@ ng new story-demo --prefix cloukit --inline-style --inline-template
 
 (2) Add `"private": true` to package.json (if not already there)
 
+(2.1) Add story dependencies to root package.json
+
+```
+yarn add @cloukit/story@6.0.0 @types/prismjs@1.9.0 prismjs@1.14.0
+```
+
 (3) replace `favicon.ico` with cloukit one
 
 ```
