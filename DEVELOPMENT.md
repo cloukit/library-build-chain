@@ -109,8 +109,12 @@ imports: [
 
 (7) Migrate the `demo` folder to `src/app/demo/` containing the DemoModule and stories
 
+(7.0) Delete demo/README.md
+
 (7.1) Change imports to the lib to publicApi e.g. `import { CloukitStoryService } from '../../../projects/cloukit/story/src/public_api';`
+
 (7.2) Change the selector of all story components to e.g. `selector: 'cloukit-story-00',`
+
 (7.3) Change the DemoModule constructor to
 
 ```
