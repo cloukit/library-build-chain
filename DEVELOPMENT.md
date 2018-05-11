@@ -223,6 +223,15 @@ body { font-family: sans-serif; }
 ![](./doc/cloukit-demo-lib.jpg)
 
 
+(9.1) add cloukit story
+
+```
+yarn add @cloukit/story@6.0.0 @types/prismjs@1.9.0 prismjs@1.14.0
+```
+
+(9.2) remove cloukit library build chain dep
+
+
 (10) Start demo locally
 
 First build library
