@@ -242,7 +242,7 @@ This is one by https://github.com/cloukit/library-deploy-chain
 ```
 yarn pre
 yarn build @cloukit/story --prod
-cd dist/cloukit/story
+cd dist/@cloukit/story
 npm publish
 ```
 
