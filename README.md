@@ -2,7 +2,7 @@
 
 # library-build-chain
 
-Common code to build the cloukit Angular libraries based on [angular-quickstart-lib](https://github.com/filipesilva/angular-quickstart-lib) and [simple-ui-lib](https://github.com/jasonaden/simple-ui-lib)
+Documentation on how libraries are build.
 
 ----
 
