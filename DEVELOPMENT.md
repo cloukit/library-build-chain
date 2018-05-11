@@ -256,6 +256,13 @@ yarn start
 
 Check demo for errors http://localhost:4200
 
+(10.1) Run karma tests
+
+```
+yarn test @cloukit/theme
+yarn test theme-demo
+```
+
 (11) Publish Lib to npm
 
 This is one by https://github.com/cloukit/library-deploy-chain
