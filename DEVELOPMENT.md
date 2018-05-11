@@ -205,6 +205,13 @@ See https://github.com/cloukit/library-build-chain on how to build, start and pu
 body { font-family: sans-serif; }
 ```
 
+
+
+(9.1) Your project now looks like this
+
+![](./doc/cloukit-demo-lib.jpg)
+
+
 (10) Start demo locally
 
 First build library
