@@ -218,6 +218,8 @@ See https://github.com/cloukit/library-build-chain on how to build, start and pu
 documentation
 ```
 
+(8.1.8) Check `public_api.ts` to export all public api!
+
 
 
 (9) Add to styles.css
