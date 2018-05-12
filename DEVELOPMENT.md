@@ -122,6 +122,31 @@ imports: [
 
 (7) Migrate the `demo` folder to `src/app/demo/` containing the DemoModule and stories
 
+(7.-1) :bangbang: Migrate SharedStyles to `'./demo.styles.css'` and use in stories!
+
+```
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'cloukit-demo',
+  templateUrl: './demo.component.html',
+  styleUrls: [ './demo.styles.css' ]
+})
+export class DemoComponent { }
+```
+
+Used in Story
+
+```
+@Component({
+  selector: 'cloukit-story-01-themed',
+  templateUrl: './story-01-themed.html',
+  styleUrls: [ '../demo.styles.css' ]
+})
+export class Story01Component {
+```
+
+
 (7.0) change `demo/README.md`
 
 ```
