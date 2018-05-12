@@ -122,7 +122,22 @@ imports: [
 
 (7) Migrate the `demo` folder to `src/app/demo/` containing the DemoModule and stories
 
-(7.0) Delete demo/README.md
+(7.0) change `demo/README.md`
+
+```
+# Build and Run Demo
+
+Clone the demo and run it with [yarn](https://yarnpkg.com/en/).
+
+``````
+git clone https://github.com/cloukit/toggle.git
+cd toggle
+yarn
+yarn start
+``````
+
+Go to http://localhost:4200/
+```
 
 (7.1) Change imports to the lib to publicApi e.g. `import { CloukitStoryService } from '../../../projects/cloukit/story/src/public_api';`
 
