@@ -62,7 +62,9 @@ yarn add @cloukit/story@6.0.0 @types/prismjs@1.9.0 prismjs@1.14.0
 (3) replace `favicon.ico` with cloukit one
 
 ```
+cd src
 rm favicon.ico && wget https://cloukit.github.io/favicon.ico
+cd ..
 ```
 
 (4) Change `app.component.ts` to
@@ -85,12 +87,16 @@ export class AppComponent {
 ```
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { DemoModule } from './demo/demo.module';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
       ],
+      imports: [
+        DemoModule,
+      ]
     }).compileComponents();
   }));
   it('should create the app', async(() => {
@@ -99,6 +105,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 });
+
 ```
 
 (6) Add `DemoModule` in `app.module.ts`
