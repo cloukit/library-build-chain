@@ -1,5 +1,7 @@
 [![](https://cloukit.github.io/assets/images/cloukit-banner-github.svg?v3)](https://cloukit.github.io/)
 
+### :bangbang: DEPRECATED AND ARCHIVED
+
 # library-build-chain
 
 Documentation on how libraries are build.
